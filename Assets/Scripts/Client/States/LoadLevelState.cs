@@ -69,10 +69,8 @@ namespace Client.States
             var view = _dp.GetService<FieldView>();
             var viewConfig = _levelsConfig.GetData(_levelData.Name);
             _backgroundService.SwitchBackground(viewConfig.Background);
-            var viewData = viewConfig.ViewData(_levelData.LvlLoop);
-            //HACK
-            _levelData.Difficulty = viewData.Difficulty;
-            var levelModel = _levelFactory.Create(_levelData, viewData.CutTemplate, viewData.DiscreteRotationAngle);
+            var viewData = viewConfig.Rules();
+            var levelModel = _levelFactory.Create(_levelData, viewData.CutTemplate, viewData.RotationAngle);
             var levelPresenter = _levelPresenterFactory.Create(view, levelModel);
 
             levelPresenter.BuildLevel();

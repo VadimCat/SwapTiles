@@ -14,18 +14,18 @@ namespace Client.Presenters
         private readonly FieldView _fieldView;
         private readonly LevelPlayableDecorator _levelPlayableDecorator;
         private readonly CameraProvider _cameraProvider;
-        private readonly GridFieldPositionCalculator _gridFieldPositionCalculator;
+        private readonly GridField _gridField;
         private readonly ModelAnimator _modelAnimator;
 
         public CellsInteractionStatesFactory(SwipeListener swipeListener, FieldView fieldView, LevelPlayableDecorator levelPlayableDecorator,
-            CameraProvider cameraProvider, GridFieldPositionCalculator gridFieldPositionCalculator,
+            CameraProvider cameraProvider, GridField gridField,
             ModelAnimator modelAnimator)
         {
             _swipeListener = swipeListener;
             _fieldView = fieldView;
             _levelPlayableDecorator = levelPlayableDecorator;
             _cameraProvider = cameraProvider;
-            _gridFieldPositionCalculator = gridFieldPositionCalculator;
+            _gridField = gridField;
             _modelAnimator = modelAnimator;
         }
 
@@ -37,7 +37,7 @@ namespace Client.Presenters
                 [typeof(FirstCellHold)] = new FirstCellHold(stateMachine, _swipeListener, _levelPlayableDecorator),
                 [typeof(FirstCellSelected)] = new FirstCellSelected(stateMachine, _swipeListener, _fieldView, _levelPlayableDecorator, _modelAnimator),
                 [typeof(SecondCellHold)] = new SecondCellHold(stateMachine, _fieldView, _levelPlayableDecorator),
-                [typeof(FirstCellMoving)] = new FirstCellMoving(stateMachine, _levelPlayableDecorator, _cameraProvider, _gridFieldPositionCalculator)
+                [typeof(FirstCellMoving)] = new FirstCellMoving(stateMachine, _levelPlayableDecorator, _cameraProvider, _gridField)
             };
 
             return dict;

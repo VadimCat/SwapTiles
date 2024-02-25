@@ -15,12 +15,12 @@ namespace Client.Presenters
 
         public bool IsSwipesAllowed => ((ISwipeController)_stateMachine.CurrentState).IsSwipesAllowed;
 
-        public CellsInteractionHandler(GridFieldPositionCalculator gridFieldPositionCalculator, LevelPlayableDecorator levelPlayableDecorator,
+        public CellsInteractionHandler(GridField gridField, LevelPlayableDecorator levelPlayableDecorator,
             FieldView fieldView, SwipeListener swipeListener, CameraProvider cameraProvider,
             ModelAnimator modelAnimator)
         {
             _stateMachine = new StateMachine(new CellsInteractionStatesFactory(swipeListener, fieldView, levelPlayableDecorator,
-                cameraProvider, gridFieldPositionCalculator, modelAnimator));
+                cameraProvider, gridField, modelAnimator));
         }
 
         public void Initialize()

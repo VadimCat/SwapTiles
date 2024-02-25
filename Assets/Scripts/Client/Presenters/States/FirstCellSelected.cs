@@ -61,7 +61,7 @@ namespace Client.Presenters
             }
         }
 
-        private void OnTileSet(Vector2Int _)
+        private void OnTileSet(Vector3Int _)
         {
             _stateMachine.Enter<NoCellsState>().Forget();
         }

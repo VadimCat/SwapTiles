@@ -16,17 +16,17 @@ namespace Client.Presenters
         private readonly StateMachine _stateMachine;
         private readonly LevelPlayableDecorator _levelPlayableDecorator;
         private readonly CameraProvider _cameraProvider;
-        private readonly GridFieldPositionCalculator _gridFieldPositionCalculator;
+        private readonly GridField _gridField;
         private (CellView cell, PointerEventData pointerEventData) _payload;
         private Vector3 _prevPos;
 
         public FirstCellMoving(StateMachine stateMachine, LevelPlayableDecorator levelPlayableDecorator, CameraProvider cameraProvider,
-            GridFieldPositionCalculator gridFieldPositionCalculator)
+            GridField gridField)
         {
             _stateMachine = stateMachine;
             _levelPlayableDecorator = levelPlayableDecorator;
             _cameraProvider = cameraProvider;
-            _gridFieldPositionCalculator = gridFieldPositionCalculator;
+            _gridField = gridField;
         }
 
         public UniTask Enter((CellView cell, PointerEventData pointerEventData) payload)
@@ -59,7 +59,7 @@ namespace Client.Presenters
 
         private void OnCellUp(CellView cell, PointerEventData pointerEventData)
         {
-            var firstCellPos = _gridFieldPositionCalculator.GetReversePoint(_payload.cell.transform.position);
+            var firstCellPos = _gridField.GetReversePoint(_payload.cell.transform.position);
             _levelPlayableDecorator.ClickTile(firstCellPos);
             _stateMachine.Enter<NoCellsState>().Forget();
         }

@@ -81,7 +81,7 @@ namespace Editor
 
         private void CreateLevel(string id, Sprite sprite, Vector2Int size, Sprite backSprite)
         {
-            var config = CreateInstance<LevelViewDataConfig>();
+            var config = CreateInstance<LevelConfig>();
             config.name = id;
             config.SetData(id, sprite, backSprite);
 

@@ -12,7 +12,7 @@ namespace Client.Models
     public enum RotationDirection
     {
         None,
-        Clockwise,
-        CounterClockwise
+        Clockwise = -1,
+        CounterClockwise = 1
     }
 }

@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3297356484601238510}
   - component: {fileID: 3026036310494877871}
   - component: {fileID: 6738182120045125389}
-  - component: {fileID: 4349911770764616864}
   - component: {fileID: 6513576431543277645}
+  - component: {fileID: 4349911770764616864}
   m_Layer: 0
   m_Name: ProgressBar
   m_TagString: Untagged
@@ -80,20 +80,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4349911770764616864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 441533324649574043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9388b1aaaa6040bd9ba25e41256c125a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speedPercent: 0.5
-  loadingBar: {fileID: 7894985535828955339}
 --- !u!114 &6513576431543277645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,6 +94,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 5293157481272012748}
   speedPercent: 0.5
+--- !u!114 &4349911770764616864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441533324649574043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9388b1aaaa6040bd9ba25e41256c125a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedPercent: 0.5
+  loadingBar: {fileID: 7894985535828955339}
 --- !u!1 &3154322764103660463
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,16 +633,18 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 7623509003800375759}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: progressBar
-      Entry: 10
-      Data: 0
+    - Name: _progressBar
+      Entry: 7
+      Data: 0|Ji2.UI.DummyProgressBar, Ji2.UI
+    - Name: 
+      Entry: 8
+      Data: 
   logo0: {fileID: 2760738595001213177}
 --- !u!114 &7623509003800375759
 MonoBehaviour:
@@ -667,7 +669,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: bars
+    - Name: _bars
       Entry: 7
       Data: 0|Ji2.UI.IProgressBar[], Ji2.UI
     - Name: 

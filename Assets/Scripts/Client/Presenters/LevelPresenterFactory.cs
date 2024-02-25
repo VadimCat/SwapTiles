@@ -20,6 +20,7 @@ namespace Client.Presenters
         private readonly ICompliments _compliments;
         private readonly CameraProvider _cameraProvider;
         private readonly Pool<CellView> _cellsPool;
+        private readonly GridField.Factory _gridFactory;
 
         public LevelPresenterFactory(IDependenciesProvider dp)
         {
@@ -32,12 +33,13 @@ namespace Client.Presenters
             //TODO: replace legacy input with new input system class
             _cameraProvider = dp.GetService<CameraProvider>();
             _cellsPool = dp.GetService<Pool<CellView>>();
+            _gridFactory = new GridField.Factory();
         }
 
         public LevelPresenter Create(FieldView view, LevelPlayableDecorator model)
         {
             return new LevelPresenter(view, model, _screenNavigator, _cellsPool, _updateService, _levelsConfig,
-                _levelsLoopProgress, _sound, _compliments, _cameraProvider);
+                _levelsLoopProgress, _sound, _compliments, _cameraProvider, _gridFactory);
         }
     }
 }

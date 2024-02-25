@@ -1,13 +1,12 @@
 ﻿using JetBrains.Annotations;
 using Ji2.Configs.Levels;
-using Ji2.Models;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Client
 {
     [CreateAssetMenu(fileName = "LevelViewConfig")]
-    public class LevelViewDataConfig : SerializedScriptableObject, ILevelViewData
+    public class LevelConfig : SerializedScriptableObject, ILevelViewData
     {
         [SerializeField] private string id;
 
@@ -16,24 +15,22 @@ namespace Client
 
         [SerializeField] private Sprite background;
 
-        [field: SerializeField] private LevelRules[] LevelRules { get; set; }
+        [field: SerializeField] private LevelSettings[] LevelRules { get; set; }
 
         public Sprite Background => background;
         public string Id => id;
 
-        public LevelViewData ViewData(int loop)
+        public LevelRules Rules()
         {
-            var difficulty = (Difficulty)Mathf.Clamp(loop, 0, LevelRules.Length);
-            var rules = LevelRules[Mathf.Clamp(loop, 0, LevelRules.Length - 1)];
+            var rules = LevelRules[0];
 
             var cutTemplate = rules.GetTemplate();
 
-            return new LevelViewData()
+            return new LevelRules()
             {
-                Difficulty = difficulty,
                 CutTemplate = cutTemplate,
                 Image = Image,
-                DiscreteRotationAngle = rules.IsRotationAvailable ? GetRotationAngle() : 0
+                RotationAngle = rules.IsRotationAvailable ? GetRotationAngle() : 0
             };
 
             int GetRotationAngle()
@@ -56,21 +53,22 @@ namespace Client
 
     [ShowOdinSerializedPropertiesInInspector]
     [UsedImplicitly]
-    public class LevelRules
+    public class LevelSettings
     {
-        [field: SerializeField] bool[,] LevelTemplate { get; set; }
-        [field: SerializeField] public bool IsRotationAvailable { get; private set; }
+        [field: SerializeField] bool[,] InEditorLevelTemplate { get; set; }
+        [field: SerializeField] public bool IsRotationAvailable { get; set; }
+        [field: SerializeField] public bool[,] CutTemplate => GetTemplate();
 
         public bool[,] GetTemplate()
         {
-            var height = LevelTemplate.GetLength(1);
-            var width = LevelTemplate.GetLength(0);
+            var height = InEditorLevelTemplate.GetLength(1);
+            var width = InEditorLevelTemplate.GetLength(0);
             bool[,] template = new bool[width, height];
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
                 {
-                    template[i, j] = LevelTemplate[i, height - j - 1];
+                    template[i, j] = InEditorLevelTemplate[i, height - j - 1];
                 }
             }
 

@@ -23,14 +23,14 @@ MonoBehaviour:
     SerializationNodes:
     - Name: <LevelRules>k__BackingField
       Entry: 7
-      Data: 0|Client.LevelRules[], Client
+      Data: 0|Client.LevelSettings[], Client
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 1|Client.LevelRules, Client
-    - Name: <LevelTemplate>k__BackingField
+      Data: 1|Client.LevelSettings, Client
+    - Name: <InEditorLevelTemplate>k__BackingField
       Entry: 7
       Data: 2|System.Boolean[,], mscorlib
     - Name: 
@@ -44,7 +44,7 @@ MonoBehaviour:
       Data: false
     - Name: 
       Entry: 5
-      Data: true
+      Data: false
     - Name: 
       Entry: 5
       Data: false
@@ -59,7 +59,7 @@ MonoBehaviour:
       Data: 
     - Name: <IsRotationAvailable>k__BackingField
       Entry: 5
-      Data: true
+      Data: false
     - Name: 
       Entry: 8
       Data: 

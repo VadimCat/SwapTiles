@@ -41,7 +41,7 @@ namespace Client.Presenters
 
         public LevelPresenter(FieldView view, LevelPlayableDecorator model, ScreenNavigator screenNavigator, Pool<CellView> cellsPool,
             UpdateService updateService, LevelsConfig levelConfig, LevelsLoopProgress levelsLoopProgress,
-            Sound sound, ICompliments compliments, CameraProvider cameraProvider)
+            Sound sound, ICompliments compliments, CameraProvider cameraProvider, GridField.Factory gridFactory)
         {
             _view = view;
             _model = model;
@@ -53,10 +53,9 @@ namespace Client.Presenters
             _compliments = compliments;
             _camera = cameraProvider.MainCamera;
 
-            var gridFieldPositionCalculator = new GridFieldPositionCalculator(_model.Size, _screenNavigator.Size, _screenNavigator.ScaleFactor,
-                levelConfig.GetData(_model.Name).Image.Aspect());
+            var grid = gridFactory.Create(_model.Size, _screenNavigator.Size, levelConfig.GetData(_model.Name).Image.Aspect());
 
-            var cellFactory = new CellFactory(_model, _cellsPool, gridFieldPositionCalculator, _view,
+            var cellFactory = new CellFactory(_model, _cellsPool, grid, _view,
                 levelConfig.GetData(_model.Name).Image);
             _view.SetDependencies(cellFactory, sound);
 
@@ -71,7 +70,7 @@ namespace Client.Presenters
             _swipeListener.EventSwiped += TrySwipe;
 
             _cellsInteractionHandler =
-                new CellsInteractionHandler(gridFieldPositionCalculator, _model, view, _swipeListener, cameraProvider, _modelAnimator);
+                new CellsInteractionHandler(grid, _model, view, _swipeListener, cameraProvider, _modelAnimator);
         }
 
         public void BuildLevel()
@@ -89,7 +88,7 @@ namespace Client.Presenters
             _model.Start();
         }
 
-        public Vector3 GetTilePos(Vector2Int pos)
+        public Vector3 GetTilePos(Vector3Int pos)
         {
             return _view.PosToCell[pos].transform.position;
         }
@@ -108,7 +107,7 @@ namespace Client.Presenters
             _model.TrySwipe(signedAngle > 0 ? RotationDirection.Clockwise : RotationDirection.CounterClockwise);
         }
 
-        private void Rotate(Vector2Int pos, int rotation)
+        private void Rotate(Vector3Int pos, int rotation)
         {
             _modelAnimator.Enqueue(async () =>
             {
@@ -122,7 +121,7 @@ namespace Client.Presenters
             }).Forget();
         }
 
-        private void SetTile(Vector2Int pos)
+        private void SetTile(Vector3Int pos)
         {
             _tilesSet++;
             int closureSet = _tilesSet;
@@ -137,17 +136,17 @@ namespace Client.Presenters
             }).Forget();
         }
 
-        private void DeselectTile(Vector2Int pos)
+        private void DeselectTile(Vector3Int pos)
         {
             _modelAnimator.Animate(_view.PlayDeselectAnimation(pos)).Forget();
         }
 
-        private void SwapTiles(Vector2Int pos1, Vector2Int pos2)
+        private void SwapTiles(Vector3Int pos1, Vector3Int pos2)
         {
             _modelAnimator.Enqueue(() => _view.SwapAnimation(pos1, pos2)).Forget();
         }
 
-        private void SelectTile(Vector2Int tilePos)
+        private void SelectTile(Vector3Int tilePos)
         {
             if (_model.SelectedTilesCount == 1)
             {

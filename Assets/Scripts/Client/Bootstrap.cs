@@ -81,7 +81,7 @@ namespace Client
 
         private void InstallStateMachine()
         {
-            StateMachine appStateMachine = new StateMachine(new StateFactory(_diContext));
+            StateMachine appStateMachine = new StateMachine(new GameStatesFactory(_diContext));
             _diContext.Register(appStateMachine);
         }
 

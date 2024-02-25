@@ -7,14 +7,14 @@ namespace Client.Views
 {
     public class FieldView : MonoBehaviour
     {
-        private GridFieldPositionCalculator _gridFieldPositionCalculator;
+        private GridField _gridField;
         public Transform SpawnRoot => transform;
 
-        public IReadOnlyDictionary<Vector2Int, CellView> PosToCell => _posToCell;
-        public IReadOnlyDictionary<CellView, Vector2Int> CellToPos => _cellToPos;
+        public IReadOnlyDictionary<Vector3Int, CellView> PosToCell => _posToCell;
+        public IReadOnlyDictionary<CellView, Vector3Int> CellToPos => _cellToPos;
 
-        private readonly Dictionary<Vector2Int, CellView> _posToCell = new();
-        private readonly Dictionary<CellView, Vector2Int> _cellToPos = new();
+        private readonly Dictionary<Vector3Int, CellView> _posToCell = new();
+        private readonly Dictionary<CellView, Vector3Int> _cellToPos = new();
         private Sound _sound;
         private ICellViewFactory _cellViewFactory;
 
@@ -48,12 +48,12 @@ namespace Client.Views
 
             void RegisterCell(int x, int y, CellView cellView)
             {
-                _posToCell[new Vector2Int(x, y)] = cellView;
-                _cellToPos[cellView] = new Vector2Int(x, y);
+                _posToCell[new Vector3Int(x, y)] = cellView;
+                _cellToPos[cellView] = new Vector3Int(x, y);
             }
         }
 
-        public async UniTask SwapAnimation(Vector2Int pos1, Vector2Int pos2)
+        public async UniTask SwapAnimation(Vector3Int pos1, Vector3Int pos2)
         {
             _sound.PlaySfxAsync(SoundNamesCollection.Swap).Forget();
 
@@ -70,27 +70,27 @@ namespace Client.Views
             _cellToPos[cell2] = pos1;
         }
 
-        public async UniTask PlaySelectAnimation(Vector2Int tilePos)
+        public async UniTask PlaySelectAnimation(Vector3Int tilePos)
         {
             _sound.PlaySfxAsync(SoundNamesCollection.TileTap).Forget();
             await PosToCell[tilePos].PlaySelectAnimation();
         }
 
-        public async UniTask PlayDeselectAnimation(Vector2Int pos)
+        public async UniTask PlayDeselectAnimation(Vector3Int pos)
         {
             _sound.PlaySfxAsync(SoundNamesCollection.TileTap).Forget();
 
             await PosToCell[pos].PlayDeselectAnimation();
         }
 
-        public async UniTask PlaySetAnimation(Vector2Int pos)
+        public async UniTask PlaySetAnimation(Vector3Int pos)
         {
             _sound.PlaySfxAsync(SoundNamesCollection.TileSet).Forget();
 
             await PosToCell[pos].PlaySetAnimation();
         }
 
-        public async UniTask PlayRotationAnimation(Vector2Int pos, int rotation)
+        public async UniTask PlayRotationAnimation(Vector3Int pos, int rotation)
         {
             await PosToCell[pos].PlayRotationAnimation(rotation);
         }

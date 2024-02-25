@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 namespace Client
 {
     [CreateAssetMenu(fileName = "LevelsConfig")]
-    public class LevelsConfig : LevelsViewDataStorageBase<LevelViewDataConfig>
+    public class LevelsConfig : LevelsViewDataStorageBase<LevelConfig>
     {
         [FormerlySerializedAs("levelCellView")] [SerializeField] private CellView levelACellView;
 
