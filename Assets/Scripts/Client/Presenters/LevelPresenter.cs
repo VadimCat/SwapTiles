@@ -66,7 +66,7 @@ namespace Client.Presenters
             _model.TileSet += SetTile;
             _model.TileRotated += Rotate;
 
-            _swipeListener = new SwipeListener(updateService);
+            _swipeListener = new SwipeListener(updateService, new TouchScreenInputActions());
             _swipeListener.EventSwiped += TrySwipe;
 
             _cellsInteractionHandler =
@@ -98,12 +98,11 @@ namespace Client.Presenters
             _model.AppendPlayTime(Time.deltaTime);
         }
 
-        private void TrySwipe(Vector2 from, Vector2 to)
+        private void TrySwipe(SwipeData swipe)
         {
-            var swipeDir = to - from;
             var tileScreenPos = _camera.WorldToScreenPoint(_view.PosToCell[_model.FirstSelected].transform.position);
-            Vector2 tileToTouch = (Vector2)tileScreenPos - to;
-            var signedAngle = Vector2.SignedAngle(swipeDir, tileToTouch);
+            Vector2 tileToTouch = (Vector2)tileScreenPos - swipe.To;
+            var signedAngle = Vector2.SignedAngle(swipe.Direction, tileToTouch);
             _model.TrySwipe(signedAngle > 0 ? RotationDirection.Clockwise : RotationDirection.CounterClockwise);
         }
 

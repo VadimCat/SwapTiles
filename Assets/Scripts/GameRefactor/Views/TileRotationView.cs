@@ -20,22 +20,21 @@ namespace GameRefactor.Views
   }
   
   private ITileRotation _tileRotation;
-  private ITileRotation _tileRotationImplementation;
-  public bool IsCompleted => _tileRotationImplementation.IsCompleted;
+  public bool IsCompleted => _tileRotation.IsCompleted;
 
   public event Action<bool> EventIsCompletedUpdated
   {
-   add => _tileRotationImplementation.EventIsCompletedUpdated += value;
-   remove => _tileRotationImplementation.EventIsCompletedUpdated -= value;
+   add => _tileRotation.EventIsCompletedUpdated += value;
+   remove => _tileRotation.EventIsCompletedUpdated -= value;
   }
 
   public event Action<int> EventRotationUpdated
   {
-   add => _tileRotationImplementation.EventRotationUpdated += value;
-   remove => _tileRotationImplementation.EventRotationUpdated -= value;
+   add => _tileRotation.EventRotationUpdated += value;
+   remove => _tileRotation.EventRotationUpdated -= value;
   }
 
-  public int Rotation => _tileRotationImplementation.Rotation;
+  public int Rotation => _tileRotation.Rotation;
 
   private void Construct(ITileRotation tileRotation)
   {
@@ -54,7 +53,7 @@ namespace GameRefactor.Views
 
   public void Rotate(RotationDirection direction)
   {
-   _tileRotationImplementation.Rotate(direction);
+   _tileRotation.Rotate(direction);
   }
  }
 }

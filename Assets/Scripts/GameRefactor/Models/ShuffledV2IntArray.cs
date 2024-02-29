@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Ji2.Utils.Shuffling;
 using UnityEngine;
 
-namespace GameRefactor.Game
+namespace GameRefactor.Models
 {
  public class ShuffledV2IntArray
  {
@@ -24,13 +24,16 @@ namespace GameRefactor.Game
     }
    }
 
-   var shuffledIndexes = Shufflling.CreateShuffledArray(_shuffledElements.Count);
+   var shuffledIndexes = Shufflling.CreateShuffledArray(availableElements.Count);
 
    int i = 0;
    for (var row = 0; row < exceptIndexes.GetLength(0); row++)
    for (var column = 0; column < exceptIndexes.GetLength(1); column++)
    {
-    _shuffledElements.Add((new Vector3Int(row, column, 0), availableElements[shuffledIndexes[i++]]));
+    if (!exceptIndexes[row, column])
+    {
+      _shuffledElements.Add((new Vector3Int(row, column, 0), availableElements[shuffledIndexes[i++]]));
+    }
    }
   }
  }

@@ -59,7 +59,7 @@ MonoBehaviour:
       Data: 
     - Name: <IsRotationAvailable>k__BackingField
       Entry: 5
-      Data: false
+      Data: true
     - Name: 
       Entry: 8
       Data: 

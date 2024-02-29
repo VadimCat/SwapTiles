@@ -2,9 +2,12 @@ using System.Collections.Generic;
 using Client;
 using Client.Presenters;
 using Client.Views;
+using GameRefactor.GameInput;
 using GameRefactor.Interfaces;
 using GameRefactor.Models;
 using GameRefactor.Views;
+using Ji2;
+using Ji2.CommonCore;
 using Ji2.Utils.Shuffling;
 using UnityEngine;
 
@@ -17,23 +20,25 @@ namespace GameRefactor.Game
   private readonly TileImageView.Factory _tileImageFactory;
   private readonly GridField _gridField;
   private readonly LevelConfig _levelConfig;
+  private readonly UpdateService _updateService;
   private readonly List<ITileSolvable> _solvableItems;
   private readonly LevelRules _rules;
   private readonly bool[,] _template;
 
   public TilesLevel(TileRotationView.Factory rotationViewFactory, TilePositionView.Factory positionViewFactory,
-   TileImageView.Factory tileImageFactory, LevelConfig levelConfig)
+   TileImageView.Factory tileImageFactory, LevelConfig levelConfig, UpdateService updateService)
   {
    _rotationViewFactory = rotationViewFactory;
    _positionViewFactory = positionViewFactory;
    _tileImageFactory = tileImageFactory;
    _levelConfig = levelConfig;
+   _updateService = updateService;
 
    _rules = levelConfig.Rules();
    _template = _rules.CutTemplate;
    _solvableItems = new List<ITileSolvable>(_template.GetLength(0) * _template.GetLength(1));
   }
-  
+
   public void BuildLevel()
   {
    LevelRules data = _levelConfig.Rules();
@@ -44,6 +49,15 @@ namespace GameRefactor.Game
    {
     _solvableItems.Add(CreateItem(element.original, element.shuffled));
    }
+
+   CreateInput();
+  }
+
+  private void CreateInput()
+  {
+   var touchInput = new TouchScreenInputActions();
+   var input = new TilesInput(new SwipeListener(_updateService, new TouchScreenInputActions()),
+    new TouchpadInputActions(touchInput, _updateService), new CameraProvider());
   }
 
   private ITileSolvable CreateItem(Vector3Int current, Vector3Int position)
@@ -52,11 +66,11 @@ namespace GameRefactor.Game
     _tileImageFactory.Create(_levelConfig.Image, current, _template.GetLength(0), _template.GetLength(1));
 
    List<ITileSolvable> solvables = new List<ITileSolvable>();
-   
+
    ITilePosition tilePos = new TilePosition(current, position);
    tilePos = _positionViewFactory.Create(tileImage.gameObject, tilePos);
    solvables.Add(tilePos);
-   
+
    if (_rules.RotationAngle != 0)
    {
     int rotationsCount = _rules.RotationAngle == 0 ? 0 : 360 / _rules.RotationAngle;

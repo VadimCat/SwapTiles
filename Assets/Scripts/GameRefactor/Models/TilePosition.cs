@@ -2,7 +2,7 @@ using System;
 using GameRefactor.Interfaces;
 using UnityEngine;
 
-namespace Client.Presenters
+namespace GameRefactor.Models
 {
     public class TilePosition : ITilePosition
     {

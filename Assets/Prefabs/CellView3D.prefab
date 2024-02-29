@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7029066009394262110}
   - component: {fileID: 2490225886035177837}
   - component: {fileID: 6955362465182781505}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5318371795535284539}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TempFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 8281397858870121436}
   - component: {fileID: 6867381960920749025}
   - component: {fileID: 3752738244592135777}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Quad (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 1282800142338207802}
   - component: {fileID: 6436024230102380337}
   - component: {fileID: 7775364587939539907}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: InputImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,7 +318,7 @@ GameObject:
   - component: {fileID: 8380435242001188720}
   - component: {fileID: 2134103036987101085}
   - component: {fileID: 2822084649774240347}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Frame (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -415,7 +415,7 @@ GameObject:
   - component: {fileID: 3968857201291214350}
   - component: {fileID: 3263961652263566242}
   - component: {fileID: 5556569723716560858}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,7 +516,7 @@ GameObject:
   - component: {fileID: 213683614670914888}
   - component: {fileID: 5934836035554108882}
   - component: {fileID: 1760791332651475555}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -613,7 +613,7 @@ GameObject:
   - component: {fileID: 1356966469951090673}
   - component: {fileID: 4573278318459394340}
   - component: {fileID: 5434548725355837630}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Frame (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -712,7 +712,7 @@ GameObject:
   - component: {fileID: 6665031966729607956}
   - component: {fileID: 6665031966729607952}
   - component: {fileID: 3595202481682829928}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CellView3D
   m_TagString: Untagged
   m_Icon: {fileID: 0}

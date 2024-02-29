@@ -14,12 +14,12 @@ namespace Client.Presenters
         private float _startTime;
         private Vector2? _startSwipePos;
         private bool _isEnabled;
-        public event Action<Vector2, Vector2> EventSwiped;
+        public event Action<SwipeData> EventSwiped;
         
-        public SwipeListener(UpdateService updateService)
+        public SwipeListener(UpdateService updateService, TouchScreenInputActions touchScreenInputActions)
         {
             _updateService = updateService;
-            _touchScreenInputActions = new TouchScreenInputActions();
+            _touchScreenInputActions = touchScreenInputActions;
             _touchScreenInputActions.Enable();
         }
 
@@ -63,7 +63,8 @@ namespace Client.Presenters
                     var dir = currentSwipePos - _startSwipePos.Value;
                     if (dir.sqrMagnitude > Threshold * Threshold)
                     {
-                        EventSwiped?.Invoke(_startSwipePos.Value, currentSwipePos);
+                        SwipeData swipeData = new(_startSwipePos.Value, currentSwipePos, currentSwipePos - _startSwipePos.Value);
+                        EventSwiped?.Invoke(swipeData);
                         _startSwipePos = null;
                     }
 

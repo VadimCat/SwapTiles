@@ -2,7 +2,7 @@ using System;
 using Client.Models;
 using GameRefactor.Interfaces;
 
-namespace Client.Presenters
+namespace GameRefactor.Models
 {
  public class TileRotation : ITileRotation
  {
