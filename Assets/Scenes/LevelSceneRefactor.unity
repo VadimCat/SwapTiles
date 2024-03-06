@@ -336,7 +336,7 @@ GameObject:
   - component: {fileID: 392151321}
   - component: {fileID: 392151320}
   - component: {fileID: 392151319}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -883,7 +883,7 @@ GameObject:
   - component: {fileID: 1920333794}
   - component: {fileID: 1920333793}
   - component: {fileID: 1920333792}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Quad (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -898,7 +898,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1920333790}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.834, z: 11.29}
+  m_LocalPosition: {x: 0, y: -1, z: 11.29}
   m_LocalScale: {x: 8, y: 35.19, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

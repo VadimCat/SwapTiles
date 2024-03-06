@@ -1,14 +1,17 @@
+using System.Collections.Generic;
 using Client;
 using Client.Presenters;
 using Client.Views;
 using GameRefactor.GameInput;
+using GameRefactor.GameInput.InputActions;
 using GameRefactor.Views;
 using Ji2;
 using Ji2.CommonCore;
+using Ji2.Context;
+using Ji2.Context.Context;
 using Ji2.Utils;
 using Ji2Core.Core.ScreenNavigation;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace GameRefactor.Game
 {
@@ -18,18 +21,47 @@ namespace GameRefactor.Game
   [SerializeField] private ScreenNavigator screenNavigator;
   [SerializeField] private TileImageView tileImagePrefab;
   [SerializeField] private UpdateService updateService;
-  
+
   private GridField _gridField;
+
   private void Awake()
   {
+   DiContext levelContext = new(DiContext.GetOrCreateInstance());
+   CameraProvider cameraProvider = new();
+   levelContext.Register(cameraProvider);
+   levelContext.Register(updateService);
+   levelContext.Register(new ScreenSpacePlane(cameraProvider));
+   
    LevelRules rules = testConfig.Rules();
 
    TilePositionView.Factory positionViewFactory = PositionViewFactory(rules);
    TileRotationView.Factory rotationViewFactory = new();
-   TileImageView.Factory tileImageFactory = new TileImageView.Factory(tileImagePrefab, _gridField);
-
-   var level = new TilesLevel(rotationViewFactory, positionViewFactory, tileImageFactory, testConfig, updateService);
+   TileImageView.Factory tileImageFactory = new(tileImagePrefab, _gridField);
+   Entity.Factory entitiesFactory = new();
+   TilesGrid tilesGrid = new(_gridField);
+   levelContext.Register(tilesGrid);
+   TilesLevel level = new(rotationViewFactory, positionViewFactory, tileImageFactory, testConfig, entitiesFactory,
+    tilesGrid);
    level.BuildLevel();
+
+   levelContext.Register(level);
+
+   TouchScreenInputActions touchScreenInputActions = new();
+   levelContext.Register(touchScreenInputActions);
+   touchScreenInputActions.Enable();
+
+   TapInputAction tapInputAction = new(touchScreenInputActions, updateService);
+   tapInputAction.Enable();
+
+   TilesRaycastInput tileRayCastInput = new(tapInputAction, cameraProvider);
+   InputFactory inputFactory = new(levelContext);
+   var actions = new List<GameInputActionBase>
+   {
+    inputFactory.CreateGameInputAction<SelectTileInputAction>(),
+    inputFactory.CreateGameInputAction<MoveSelectedInputAction>(),
+    inputFactory.CreateGameInputAction<SwapTilesOnTapEnd>(),
+   };
+   InputStream stream = new(tileRayCastInput, actions);
   }
 
   private TilePositionView.Factory PositionViewFactory(LevelRules rules)

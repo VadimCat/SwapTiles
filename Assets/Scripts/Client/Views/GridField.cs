@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Ji2.Context.Context;
+using UnityEngine;
 
 namespace Client.Views
 {
@@ -10,7 +11,7 @@ namespace Client.Views
 
             public GridField Create(Vector3Int size, Vector2 screenSize, float imageAspect)
             {
-                GameObject go = new GameObject();
+                GameObject go = new();
                 Grid grid = go.AddComponent<Grid>();
                 GridField instance = go.AddComponent<GridField>();
                 instance.Construct(grid, size, screenSize, imageAspect);
@@ -41,23 +42,12 @@ namespace Client.Views
         }
 
         public Vector3 GetPoint(Vector3Int position) => _grid.GetCellCenterWorld(position);
-        
-        /*private Vector3 GetPoint(int x, int y)
-        {
-            return new Vector3(_cellWidth * (x - (float)Size.x / 2 + .5f), _cellHeight * (y - (float)Size.y / 2 + .5f));
-        }*/
 
         public Vector3Int GetReversePoint(Vector3 position)
         {
-            var pos = _grid.WorldToCell(position);
+            Vector3Int pos = _grid.WorldToCell(position);
             pos.z = 0;
             return pos;
         }
-        /*{
-        {
-            return new Vector2Int(
-                Mathf.RoundToInt((position.x + _cellWidth * Size.x / 2 - _cellWidth * 0.5f) / _cellWidth),
-                Mathf.RoundToInt((position.y + _cellWidth * Size.y / 2 - _cellWidth * 0.5f) / _cellWidth));
-        }*/
     }
 }

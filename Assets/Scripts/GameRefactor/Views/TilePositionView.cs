@@ -27,7 +27,7 @@ namespace GameRefactor.Views
   
   private ITilePosition _tilePosition;
   private GridField _gridField;
-  private const float MoveTime = 1f;
+  private const float MoveTime = .5f;
   private Grid _grid;
 
   public bool IsCompleted => _tilePosition.IsCompleted;
@@ -64,9 +64,9 @@ namespace GameRefactor.Views
    transform.DOMove(newPos, MoveTime);
   }
 
-  public void Swap(ITilePosition tilePosition)
+  public void MoveTo(Vector3Int tilePosition)
   {
-   _tilePosition.Swap(tilePosition);
+   _tilePosition.MoveTo(tilePosition);
   }
  }
 }

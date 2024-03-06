@@ -53,7 +53,7 @@ namespace Client.Presenters
         {
             var movePos = GetWorldPositionOnPlane(pointerEventData.position);
 
-            cell.transform.position += movePos - _prevPos;
+            cell.transform.transform.Translate(movePos - _prevPos);
             _prevPos = movePos;
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Client.Presenters;
 using GameRefactor.Interfaces;
+using UnityEngine.Assertions;
 
 namespace GameRefactor.Models
 {
@@ -25,6 +26,7 @@ namespace GameRefactor.Models
   
   public TileComposite(IEnumerable<ITileSolvable> solvableItems)
   {
+   _solvableItems = solvableItems;
    foreach (var solvable in solvableItems)
    {
     solvable.EventIsCompletedUpdated += CheckSolve;

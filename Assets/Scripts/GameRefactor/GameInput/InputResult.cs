@@ -1,30 +1,30 @@
-using System;
-using GameRefactor.Interfaces;
+using Ji2.Context.Context;
 using UnityEngine;
 using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 namespace GameRefactor.GameInput
 {
- public class InputResult
+ public struct InputResult
  {
   public readonly bool HasTarget;
-  public readonly GameObject Target;
-  public readonly ITileSolvable[] Solvables;
+  public readonly Entity Target;
   public readonly TouchPhase TouchPhase;
+  public readonly Vector2 Pos;
 
-  public InputResult(bool hasTarget, GameObject target, ITileSolvable[] tileSolvables, TouchPhase touchPhase)
+  public InputResult(bool hasTarget, Entity target, TouchPhase touchPhase, Vector2 pos)
   {
    HasTarget = hasTarget;
    Target = target;
-   Solvables = tileSolvables;
    TouchPhase = touchPhase;
+   Pos = pos;
   }
 
-  public InputResult(TouchPhase touchPhase)
+  public InputResult(TouchPhase touchPhase, Vector2 pos)
   {
    TouchPhase = touchPhase;
+   Pos = pos;
    HasTarget = false;
-   Solvables = Array.Empty<ITileSolvable>();
+   Target = null;
   }
  }
 }

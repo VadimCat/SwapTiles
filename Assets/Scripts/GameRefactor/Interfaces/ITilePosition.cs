@@ -8,6 +8,6 @@ namespace GameRefactor.Interfaces
   Vector3Int Position { get; }
   Vector3Int OriginalPos { get; }
   event Action<Vector3Int> EventPositionUpdated;
-  void Swap(ITilePosition destination);
+  public void MoveTo(Vector3Int destination);
  }
 }
