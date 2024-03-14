@@ -18,8 +18,7 @@ namespace Client.Presenters
    remove => _tapData.EventValueChanged -= value;
   }
 
-  public 
-   TapInputAction(TouchScreenInputActions touchInput, UpdateService updateService)
+  public TapInputAction(TouchScreenInputActions touchInput, UpdateService updateService)
   {
    _touchInput = touchInput;
    _updateService = updateService;
@@ -37,7 +36,7 @@ namespace Client.Presenters
 
   public void OnUpdate()
   {
-   var phase = _touchInput.Input.TouchPhase.ReadValue<TouchPhase>();
+   TouchPhase phase = _touchInput.Input.TouchPhase.ReadValue<TouchPhase>();
    switch (phase)
    {
     case TouchPhase.None:

@@ -43,11 +43,11 @@ namespace Client.Views
 
         public Vector3 GetPoint(Vector3Int position) => _grid.GetCellCenterWorld(position);
 
-        public Vector3Int GetReversePoint(Vector3 position)
+        public bool GetReversePoint(Vector3 position, out Vector3Int cellIndex)
         {
-            Vector3Int pos = _grid.WorldToCell(position);
-            pos.z = 0;
-            return pos;
+            cellIndex = _grid.WorldToCell(position);
+            cellIndex.z = 0;
+            return cellIndex.x >= 0 && cellIndex.x <= Size.y && cellIndex.y >= 0 && cellIndex.x <= Size.y;
         }
     }
 }

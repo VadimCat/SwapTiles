@@ -24,16 +24,19 @@ namespace GameRefactor.GameInput.Actions
    Vector3Int holdPos = holdTilePos.Position;
     
    Vector3 worldPos = _screenSpacePlane.GetWorldPositionOnPlane(inputResult.Pos);
-   Entity entityOnPos = _grid.GetEntityByPos(worldPos);
-   ITilePosition tilePos = entityOnPos.GetService<ITilePosition>();
-   ISelectable posSelectable = entityOnPos.GetService<ISelectable>();
-   Vector3Int pos = tilePos.Position;
-   posSelectable.Select();
+   if(_grid.EntityByPos(worldPos, out Entity entityOnPos))
+   {
+    ITilePosition tilePos = entityOnPos.GetService<ITilePosition>();
+    ISelectable posSelectable = entityOnPos.GetService<ISelectable>();
+    Vector3Int pos = tilePos.Position;
+    posSelectable.Select();
+    
+    tilePos.MoveTo(holdPos);
+    holdTilePos.MoveTo(pos);
+    posSelectable.Deselect();
+   }
    
-   tilePos.MoveTo(holdPos);
-   holdTilePos.MoveTo(pos);
    holdsSelectable.Deselect();
-   posSelectable.Deselect();
   }
  }
 }

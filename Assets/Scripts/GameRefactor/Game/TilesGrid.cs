@@ -12,22 +12,28 @@ namespace GameRefactor.Game
   private readonly GridField _gridField;
   private readonly Dictionary<ITilePosition, Entity> _positionToEntity = new();
 
-  public TilesGrid(GridField gridField)
+  //Todo: may be should create system that contains all entities, could find, attach, same problem as CurrentSelection
+  public TilesGrid(GridField gridField, IEnumerable<Entity> entities)
   {
    _gridField = gridField;
+   foreach (var entity in entities)
+   {
+    ITilePosition position = entity.GetService<ITilePosition>();
+    _positionToEntity.Add(position, entity); 
+   }
   }
 
-  public void AddEntity(Entity entity)
+  public bool EntityByPos(Vector3 pos, out Entity entity)
   {
-   ITilePosition position = entity.GetService<ITilePosition>();
-   _positionToEntity.Add(position, entity);
-  }
+   if (_gridField.GetReversePoint(pos, out Vector3Int index))
+   {
+    ITilePosition key  =_positionToEntity.Keys.First(p => p.Position == index);
+    entity = _positionToEntity[key];
+    return true;
+   }
 
-  public Entity GetEntityByPos(Vector3 pos)
-  {
-   Vector3Int entityPos = _gridField.GetReversePoint(pos);
-   ITilePosition key  =_positionToEntity.Keys.First(p => p.Position == entityPos);
-   return _positionToEntity[key];
+   entity = null;
+   return false;
   }
  }
 }

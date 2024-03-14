@@ -4,6 +4,7 @@ using Client.Presenters;
 using Client.Views;
 using GameRefactor.GameInput;
 using GameRefactor.GameInput.InputActions;
+using GameRefactor.GameInput.InputActions.TapSwap;
 using GameRefactor.Views;
 using Ji2;
 using Ji2.CommonCore;
@@ -31,17 +32,15 @@ namespace GameRefactor.Game
    levelContext.Register(cameraProvider);
    levelContext.Register(updateService);
    levelContext.Register(new ScreenSpacePlane(cameraProvider));
-   
+
    LevelRules rules = testConfig.Rules();
 
    TilePositionView.Factory positionViewFactory = PositionViewFactory(rules);
    TileRotationView.Factory rotationViewFactory = new();
    TileImageView.Factory tileImageFactory = new(tileImagePrefab, _gridField);
    Entity.Factory entitiesFactory = new();
-   TilesGrid tilesGrid = new(_gridField);
-   levelContext.Register(tilesGrid);
    TilesLevel level = new(rotationViewFactory, positionViewFactory, tileImageFactory, testConfig, entitiesFactory,
-    tilesGrid);
+    _gridField, levelContext);
    level.BuildLevel();
 
    levelContext.Register(level);
@@ -57,11 +56,13 @@ namespace GameRefactor.Game
    InputFactory inputFactory = new(levelContext);
    var actions = new List<GameInputActionBase>
    {
-    inputFactory.CreateGameInputAction<SelectTileInputAction>(),
+    inputFactory.CreateGameInputAction<SelectFirstTile>(),
+    inputFactory.CreateGameInputAction<DeselectFirstTile>(),
     inputFactory.CreateGameInputAction<MoveSelectedInputAction>(),
+    inputFactory.CreateGameInputAction<SwapTilesOnSwipeEnd>(),
     inputFactory.CreateGameInputAction<SwapTilesOnTapEnd>(),
    };
-   InputStream stream = new(tileRayCastInput, actions);
+   InputHandler handler = new(tileRayCastInput, actions);
   }
 
   private TilePositionView.Factory PositionViewFactory(LevelRules rules)

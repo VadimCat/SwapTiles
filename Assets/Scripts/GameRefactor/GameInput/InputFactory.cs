@@ -1,9 +1,13 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using GameRefactor.Game;
 using GameRefactor.GameInput.Actions;
 using GameRefactor.GameInput.InputActions;
+using GameRefactor.GameInput.InputActions.TapSwap;
 using GameRefactor.GameInput.Specifications;
+using GameRefactor.Models.Interaction;
 using Ji2.Context;
+using UnityEngine.InputSystem;
 
 namespace GameRefactor.GameInput
 {
@@ -16,6 +20,7 @@ namespace GameRefactor.GameInput
    _diContext = new DiContext(dependenciesProvider);
   }
 
+  [SuppressMessage("ReSharper", "ConvertTypeCheckPatternToNullCheck")]
   public GameInputActionBase CreateGameInputAction<TInputAction>() where TInputAction : GameInputActionBase
   {
    if (_diContext.TryGetService(out TInputAction action))
@@ -25,8 +30,10 @@ namespace GameRefactor.GameInput
 
    return typeof(TInputAction) switch
    {
-    Type t when t == typeof(SelectTileInputAction) => SelectTileInputAction(),
+    Type t when t == typeof(SelectFirstTile) => SelectTileInputAction(),
+    Type t when t == typeof(DeselectFirstTile) => DeselectTileInputAction(),
     Type t when t == typeof(MoveSelectedInputAction) => MoveSelectedInputAction(),
+    Type t when t == typeof(SwapTilesOnSwipeEnd) => SwapTilesOnSwipeEnd(),
     Type t when t == typeof(SwapTilesOnTapEnd) => SwapTilesOnTapEnd(),
     _ => throw new NotImplementedException(),
    };
@@ -46,6 +53,13 @@ namespace GameRefactor.GameInput
     return result;
    }
 
+   if (typeof(TAction) == typeof(DeselectTileAction))
+   {
+    TAction result = new DeselectTileAction() as TAction;
+    _diContext.Register(result);
+    return result;
+   }
+
    if (typeof(TAction) == typeof(MoveTileAction))
    {
     TAction result = new MoveTileAction(_diContext.GetService<ScreenSpacePlane>()) as TAction;
@@ -61,33 +75,10 @@ namespace GameRefactor.GameInput
     return result;
    }
 
-   throw new NotImplementedException();
-  }
-
-  private TSpec CreateSpec<TSpec>() where TSpec : class, ISpecification
-  {
-   if (_diContext.TryGetService(out TSpec action))
+   if (typeof(TAction) == typeof(SwipeWithSelected))
    {
-    return action;
-   }
-
-   if (typeof(TSpec) == typeof(BeganUnselectedTargetSpecification))
-   {
-    TSpec result = new BeganUnselectedTargetSpecification() as TSpec;
-    _diContext.Register(result);
-    return result;
-   }
-
-   if (typeof(TSpec) == typeof(EndSelectedTargetSpecification))
-   {
-    TSpec result = new EndSelectedTargetSpecification() as TSpec;
-    _diContext.Register(result);
-    return result;
-   }
-
-   if (typeof(TSpec) == typeof(MoveSelectedTargetSpecification))
-   {
-    TSpec result = new MoveSelectedTargetSpecification() as TSpec;
+    TAction result =
+     new SwipeWithSelected(_diContext.GetService<CurrentSelection>()) as TAction;
     _diContext.Register(result);
     return result;
    }
@@ -97,24 +88,70 @@ namespace GameRefactor.GameInput
 
   private SwapTilesOnTapEnd SwapTilesOnTapEnd()
   {
-   SwapTilesOnTapEnd result = new(CreateAction<TrySwapTilesByPos>(),
-    CreateSpec<EndSelectedTargetSpecification>());
+   SwapTilesOnTapEnd result = new(
+    new TouchPhaseSpec(TouchPhase.Ended,
+     new IsSelected(false,
+      new HasTarget(true,
+       new IsAnySelected(_diContext.GetService<CurrentSelection>(),
+        true,
+        new True())))), new SwipeWithSelected(_diContext.GetService<CurrentSelection>()));
+
+   _diContext.Register(result);
+
+   return result;
+  }
+
+  private SwapTilesOnSwipeEnd SwapTilesOnSwipeEnd()
+  {
+   SwapTilesOnSwipeEnd result = new(
+    new TouchPhaseSpec(TouchPhase.Ended,
+     new IsSelected(true, 
+      new IsDefaultPosition(false, 
+       new HasTarget(true, 
+        new True())))),
+    CreateAction<TrySwapTilesByPos>());
    _diContext.Register(result);
    return result;
   }
 
   private MoveSelectedInputAction MoveSelectedInputAction()
   {
-   MoveSelectedInputAction result = new(CreateSpec<MoveSelectedTargetSpecification>(), CreateAction<MoveTileAction>());
+   MoveSelectedInputAction result = new(new TouchPhaseSpec(TouchPhase.Moved,
+     new IsSelected(true,
+      new HasTarget(true,
+       new True()))),
+    CreateAction<MoveTileAction>());
+
    _diContext.Register(result);
+
    return result;
   }
 
-  private SelectTileInputAction SelectTileInputAction()
+  private SelectFirstTile SelectTileInputAction()
   {
-   SelectTileInputAction result = new(CreateSpec<BeganUnselectedTargetSpecification>(),
+   SelectFirstTile result = new(
+    new IsAnySelected(_diContext.GetService<CurrentSelection>(), false,
+     new TouchPhaseSpec(TouchPhase.Began,
+      new IsSelected(false,
+       new HasTarget(true,
+        new True())))),
     CreateAction<SelectTileAction>());
+
    _diContext.Register(result);
+
+   return result;
+  }
+
+  private DeselectFirstTile DeselectTileInputAction()
+  {
+   DeselectFirstTile result = new(new TouchPhaseSpec(TouchPhase.Began,
+     new IsSelected(true,
+      new HasTarget(true,
+       new True()))),
+    CreateAction<DeselectTileAction>());
+
+   _diContext.Register(result);
+
    return result;
   }
  }

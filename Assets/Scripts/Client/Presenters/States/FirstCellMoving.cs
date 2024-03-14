@@ -59,7 +59,7 @@ namespace Client.Presenters
 
         private void OnCellUp(CellView cell, PointerEventData pointerEventData)
         {
-            var firstCellPos = _gridField.GetReversePoint(_payload.cell.transform.position);
+            _gridField.GetReversePoint(_payload.cell.transform.position, out Vector3Int firstCellPos);
             _levelPlayableDecorator.ClickTile(firstCellPos);
             _stateMachine.Enter<NoCellsState>().Forget();
         }
