@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 
-namespace GameRefactor.Interfaces
+namespace Models.Solvables
 {
- public interface ITilePosition: ITileSolvable
+ public interface ITilePosition: ITileEngine
  {
   Vector3Int Position { get; }
   Vector3Int OriginalPos { get; }

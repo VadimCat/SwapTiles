@@ -1,5 +1,5 @@
 {
-    "name": "Client.Views",
+    "name": "SwapTiles.Views",
     "rootNamespace": "",
     "references": [
         "UniTask",

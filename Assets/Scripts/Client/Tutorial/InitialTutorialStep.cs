@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Threading;
-using Client.Models;
-using Client.Presenters;
-using Client.States;
 using Client.Views;
 using Cysharp.Threading.Tasks;
 using Ji2;
@@ -24,8 +21,6 @@ namespace Client.Tutorial
         public event Action Completed;
 
         private CancellationTokenSource _cancellationTokenSource;
-        private LevelPresenter _presenter;
-        private LevelPlayableDecorator _model;
 
         public InitialTutorialStep(StateMachine stateMachine, TutorialPointerView pointer, CameraProvider cameraProvider)
         {
@@ -41,10 +36,8 @@ namespace Client.Tutorial
 
         private void OnStateEnter(IExitableState obj)
         {
-            if (obj is GameState state)
+            // if (obj is GameState state)
             {
-                _presenter = state.Payload.LevelPresenter;
-                _model = _presenter.Model;
                 _pointer.SetCamera(_cameraProvider.MainCamera);
                 
                 ShowSwapTip().Forget();
@@ -60,20 +53,16 @@ namespace Client.Tutorial
         {
             _cancellationTokenSource = new CancellationTokenSource();
             
-            if (_model.TryGetRandomNotSelectedCell(out var pos))
+            //if (_model.TryGetRandomNotSelectedCell(out var pos))
             {
                 _pointer.ShowTooltip();
                 await UniTask.Delay(50);
 
-                var position = _presenter.GetTilePos(pos);
-                _pointer.PlayClickAnimation(position, _cancellationTokenSource.Token).Forget();
-                int currentSelectionCount = _model.SelectedTilesCount;
-                await UniTask.WaitWhile(() => currentSelectionCount == _model.SelectedTilesCount);
                 Cancel();
 
                 ShowSwapTip().Forget();
             }
-            else
+            // else
             {
                 _stateMachine.StateEntered -= OnStateEnter;
                 _pointer.HideTooltip();

@@ -1,10 +1,11 @@
-using GameRefactor.GameInput.Actions;
+using Input.Actions;
+using Input.Specifications;
 
-namespace GameRefactor.GameInput.InputActions
+namespace Input.InputActions.Common
 {
  public class DeselectFirstTile : GameInputActionBase
  {
-  public DeselectFirstTile(ISpecification beganSelectedTargetSpecification, DeselectTileAction selectTile) 
+  public DeselectFirstTile(ISpecification<InputResult> beganSelectedTargetSpecification, DeselectTileAction selectTile) 
    : base(beganSelectedTargetSpecification, selectTile)
   {
   }

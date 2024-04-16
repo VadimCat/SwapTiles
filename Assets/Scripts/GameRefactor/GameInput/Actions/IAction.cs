@@ -1,4 +1,4 @@
-namespace GameRefactor.GameInput
+namespace Input.Actions
 {
  public interface IAction
  {

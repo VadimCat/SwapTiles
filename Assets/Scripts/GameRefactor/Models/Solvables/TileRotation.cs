@@ -1,8 +1,7 @@
 using System;
-using Client.Models;
-using GameRefactor.Interfaces;
+using Ji2Core.DataTypes;
 
-namespace GameRefactor.Models
+namespace Models.Solvables
 {
  public class TileRotation : ITileRotation
  {
@@ -19,7 +18,7 @@ namespace GameRefactor.Models
   public event Action<bool> EventIsCompletedUpdated;
   private bool _isCompleted;
         
-  private readonly int _rotationAngle;
+  private readonly int _rotationsCount;
   public int Rotation
   {
    get => _rotation;
@@ -33,24 +32,17 @@ namespace GameRefactor.Models
   public event Action<int> EventRotationUpdated;
   private int _rotation;
 
-  public TileRotation(int startRotation, int rotationAngle)
+  public TileRotation(int startRotation, int rotationsCount)
   {
-   _rotationAngle = rotationAngle;
+   _rotationsCount = 360 / rotationsCount;
    Rotation = startRotation;
   }
         
   public void Rotate(RotationDirection direction)
   {
-   if (IsCompleted)
-   {
-    return;
-   }
-            
-   Rotation = ClampAngle(Rotation + (int)direction * _rotationAngle);
-   if (Rotation == 0)
-   {
-    IsCompleted = true;
-   }
+   Rotation = ClampAngle(Rotation + (int)direction * _rotationsCount);
+
+   IsCompleted = Rotation == 0;
   }
         
   private int ClampAngle(int rotation)

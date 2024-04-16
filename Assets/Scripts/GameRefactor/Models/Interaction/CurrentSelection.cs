@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using GameRefactor.GameInput;
 using Ji2.Context.Context;
 
-namespace GameRefactor.Models.Interaction
+namespace Models.Interaction
 {
  public class CurrentSelection
  {
@@ -13,7 +12,7 @@ namespace GameRefactor.Models.Interaction
   {
    foreach (var entity in entities)
    {
-    ISelectable position = entity.GetService<ISelectable>();
+    ISelectable position = entity.Get<ISelectable>();
     _selectionToEntity.Add(position, entity);
    }
   }

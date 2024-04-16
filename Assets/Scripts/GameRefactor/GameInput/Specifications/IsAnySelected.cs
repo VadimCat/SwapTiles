@@ -1,14 +1,14 @@
-using GameRefactor.Models.Interaction;
+using Models.Interaction;
 
-namespace GameRefactor.GameInput.Specifications
+namespace Input.Specifications
 {
- public class IsAnySelected: ISpecification
+ public class IsAnySelected: ISpecification<InputResult>
  {
-  private readonly ISpecification _spec;
+  private readonly ISpecification<InputResult> _spec;
   private readonly CurrentSelection _currentSelection;
   private readonly bool _isAnySelected;
 
-  public IsAnySelected(CurrentSelection currentSelection, bool isAnySelected, ISpecification spec)
+  public IsAnySelected(CurrentSelection currentSelection, bool isAnySelected, ISpecification<InputResult> spec)
   {
    _spec = spec;
    _currentSelection = currentSelection;
@@ -17,6 +17,14 @@ namespace GameRefactor.GameInput.Specifications
   public bool IsMatching(InputResult inputResult)
   {
    return _spec.IsMatching(inputResult) && _currentSelection.IsAnySelected == _isAnySelected;
+  }
+ }
+
+ public static class IsAnySelectedFluentExtension
+ {
+  public static ISpecification<InputResult> IsAnySelected(this ISpecification<InputResult> specification, CurrentSelection currentSelection, bool isAnySelected)
+  {
+   return new IsAnySelected(currentSelection, isAnySelected, specification);
   }
  }
 }

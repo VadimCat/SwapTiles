@@ -1,10 +1,11 @@
-using GameRefactor.GameInput.Actions;
+using Input.Actions;
+using Input.Specifications;
 
-namespace GameRefactor.GameInput.InputActions.TapSwap
+namespace Input.InputActions.TapSwap
 {
  public class SwapTilesOnTapEnd: GameInputActionBase
  {
-  public SwapTilesOnTapEnd(ISpecification spec, SwipeWithSelected action) : base(spec, action)
+  public SwapTilesOnTapEnd(ISpecification<InputResult> spec, SwipeWithSelected action) : base(spec, action)
   {
   }
  }

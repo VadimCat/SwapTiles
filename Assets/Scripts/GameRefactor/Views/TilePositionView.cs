@@ -1,32 +1,16 @@
 using System;
 using Client.Views;
 using DG.Tweening;
-using GameRefactor.Interfaces;
+using Models.Solvables;
 using UnityEngine;
 
-namespace GameRefactor.Views
+namespace Views
 {
- public class TilePositionView :MonoBehaviour,  ITilePosition
+ public class TilePositionView: ITilePosition
  {
-  public class Factory
-  {
-   private readonly GridField _gridField;
-
-   public Factory(GridField gridField)
-   {
-    _gridField = gridField;
-   }
-   
-   public TilePositionView Create(GameObject root, ITilePosition tilePosition)
-   {
-    var component = root.AddComponent<TilePositionView>();
-    component.Construct(tilePosition, _gridField);
-    return component;
-   }
-  }
-  
-  private ITilePosition _tilePosition;
-  private GridField _gridField;
+  private readonly Transform _transform;
+  private readonly ITilePosition _tilePosition;
+  private readonly GridField _gridField;
   private const float MoveTime = .5f;
   private Grid _grid;
 
@@ -48,9 +32,9 @@ namespace GameRefactor.Views
 
   public Vector3Int OriginalPos => _tilePosition.OriginalPos;
 
-  private void Construct(ITilePosition tilePosition, GridField gridField)
+  private TilePositionView(Transform transform, ITilePosition tilePosition, GridField gridField)
   {
-   
+   _transform = transform;
    _tilePosition = tilePosition;
 
    _gridField = gridField;
@@ -61,12 +45,27 @@ namespace GameRefactor.Views
   private void OnPositionUpdated(Vector3Int position)
   {
    var newPos = _gridField.GetPoint(position);
-   transform.DOMove(newPos, MoveTime);
+   _transform.DOMove(newPos, MoveTime);
   }
 
   public void MoveTo(Vector3Int tilePosition)
   {
    _tilePosition.MoveTo(tilePosition);
+  }
+
+  public class Factory
+  {
+   private readonly GridField _grid;
+
+   public Factory(GridField grid)
+   {
+    _grid = grid;
+   }
+
+   public ITilePosition Create(Transform tileRoot, ITilePosition tilePos)
+   {
+    return new TilePositionView(tileRoot, tilePos, _grid);
+   }
   }
  }
 }

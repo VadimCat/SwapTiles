@@ -1,10 +1,11 @@
-using GameRefactor.Game;
-using GameRefactor.Interfaces;
+using Tiles;
 using Ji2;
 using Ji2.Context.Context;
+using Models.Interaction;
+using Models.Solvables;
 using UnityEngine;
 
-namespace GameRefactor.GameInput.Actions
+namespace Input.Actions
 {
  public class TrySwapTilesByPos : IAction
  {
@@ -19,15 +20,15 @@ namespace GameRefactor.GameInput.Actions
   }
   public void Act(InputResult inputResult)
   {
-   ISelectable holdsSelectable = inputResult.Target.GetService<ISelectable>();
-   ITilePosition holdTilePos = inputResult.Target.GetService<ITilePosition>();
+   ISelectable holdsSelectable = inputResult.Target.Get<ISelectable>();
+   ITilePosition holdTilePos = inputResult.Target.Get<ITilePosition>();
    Vector3Int holdPos = holdTilePos.Position;
     
    Vector3 worldPos = _screenSpacePlane.GetWorldPositionOnPlane(inputResult.Pos);
    if(_grid.EntityByPos(worldPos, out Entity entityOnPos))
    {
-    ITilePosition tilePos = entityOnPos.GetService<ITilePosition>();
-    ISelectable posSelectable = entityOnPos.GetService<ISelectable>();
+    ITilePosition tilePos = entityOnPos.Get<ITilePosition>();
+    ISelectable posSelectable = entityOnPos.Get<ISelectable>();
     Vector3Int pos = tilePos.Position;
     posSelectable.Select();
     

@@ -15,9 +15,9 @@ namespace Client.Tutorial
 
         public TutorialFactory(IDependenciesProvider dp)
         {
-            _stateMachine = dp.GetService<StateMachine>();
-            _tutorialPointerView = dp.GetService<TutorialPointerView>();
-            _cameraProvider = dp.GetService<CameraProvider>();
+            _stateMachine = dp.Get<StateMachine>();
+            _tutorialPointerView = dp.Get<TutorialPointerView>();
+            _cameraProvider = dp.Get<CameraProvider>();
         }
 
         public ITutorialStep Create<TStep>() where TStep : ITutorialStep

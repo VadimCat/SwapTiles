@@ -1,64 +1,67 @@
 ﻿using System;
 
-public partial class SROptions
+namespace StompyRobot.SROptions
 {
-    // For compatibility with older versions of SRDebugger, this simply inherits from the component model version.
+ public partial class SROptions
+ {
+  // For compatibility with older versions of SRDebugger, this simply inherits from the component model version.
 
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]
-    public sealed class DisplayNameAttribute : System.ComponentModel.DisplayNameAttribute
-    {
-        public DisplayNameAttribute(string displayName) : base(displayName)
-        {
-        }
-    }
+  [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]
+  public sealed class DisplayNameAttribute : System.ComponentModel.DisplayNameAttribute
+  {
+   public DisplayNameAttribute(string displayName) : base(displayName)
+   {
+   }
+  }
 
-    // These attributes are used when using SROptions. Options added via SRDebug.Instance.AddOptionsContainer can use the attribute defined in SRDebugger namespace.
+  // These attributes are used when using SROptions. Options added via SRDebug.Instance.AddOptionsContainer can use the attribute defined in SRDebugger namespace.
 
-    [AttributeUsage(AttributeTargets.Property)]
-    public sealed class IncrementAttribute :
+  [AttributeUsage(AttributeTargets.Property)]
+  public sealed class IncrementAttribute :
 #if DISABLE_SRDEBUGGER
         Attribute
 #else
-        SRDebugger.IncrementAttribute
+   SRDebugger.IncrementAttribute
 #endif
-    {
-        public IncrementAttribute(double increment)
+  {
+   public IncrementAttribute(double increment)
 #if !DISABLE_SRDEBUGGER
-            : base(increment)
+    : base(increment)
 #endif
-        {
-        }
-    }
+   {
+   }
+  }
 
-    [AttributeUsage(AttributeTargets.Property)]
-    public sealed class NumberRangeAttribute :
+  [AttributeUsage(AttributeTargets.Property)]
+  public sealed class NumberRangeAttribute :
 #if DISABLE_SRDEBUGGER
         Attribute
 #else
-        SRDebugger.NumberRangeAttribute
+   SRDebugger.NumberRangeAttribute
 #endif
-    {
-        public NumberRangeAttribute(double min, double max)
+  {
+   public NumberRangeAttribute(double min, double max)
 #if !DISABLE_SRDEBUGGER
-            : base(min, max)
+    : base(min, max)
 #endif
-        {
-        }
-    }
+   {
+   }
+  }
 
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]
-    public sealed class SortAttribute :
+  [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]
+  public sealed class SortAttribute :
 #if DISABLE_SRDEBUGGER
         Attribute
 #else
-        SRDebugger.SortAttribute
+   SRDebugger.SortAttribute
 #endif
-    {
-        public SortAttribute(int priority)
+  {
+   public SortAttribute(int priority)
 #if !DISABLE_SRDEBUGGER
-            : base(priority)
+    : base(priority)
 #endif
-        {
-        }
-    }
+   {
+   }
+  }
+ }
 }

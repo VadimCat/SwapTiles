@@ -1,4 +1,6 @@
-namespace GameRefactor.GameInput.Actions
+using Models.Interaction;
+
+namespace Input.Actions
 {
  public class SelectTileAction : IAction
  {

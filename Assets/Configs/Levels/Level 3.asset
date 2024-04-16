@@ -21,24 +21,24 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: <LevelRules>k__BackingField
+    - Name: <EnginesSettingsLevels>k__BackingField
       Entry: 7
-      Data: 0|Client.LevelSettings[], Client
+      Data: 0|Client.EnginesSettings[], Client
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 1|Client.LevelSettings, Client
+      Data: 1|Client.EnginesSettings, Client
     - Name: <InEditorLevelTemplate>k__BackingField
       Entry: 7
       Data: 2|System.Boolean[,], mscorlib
     - Name: 
       Entry: 12
-      Data: 4
+      Data: 9
     - Name: ranks
       Entry: 1
-      Data: 2|2
+      Data: 3|3
     - Name: 
       Entry: 5
       Data: false
@@ -52,15 +52,42 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: <IsRotationAvailable>k__BackingField
       Entry: 5
       Data: true
     - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <EngineRules>k__BackingField
+      Entry: 7
+      Data: 3|Client.IRules[], Client
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 4|Client.RotationRules, Client
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 5|Client.PositionRules, Client
+    - Name: 
       Entry: 8
       Data: 
     - Name: 
@@ -69,6 +96,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  id: 2
-  <Image>k__BackingField: {fileID: 21300000, guid: aeaf8c77f14424887b12b6eeeb5f9473, type: 3}
-  background: {fileID: 21300000, guid: 534cfbdfda00d394bbc4ba66ffbddc2a, type: 3}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  id: 
+  <Image>k__BackingField: {fileID: 21300000, guid: ead5dac7ea539486696c22bec522f92f, type: 3}
+  background: {fileID: 0}

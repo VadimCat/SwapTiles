@@ -1,13 +1,13 @@
-using GameRefactor.Models.Interaction;
+using Models.Interaction;
 
-namespace GameRefactor.GameInput.Specifications
+namespace Input.Specifications
 {
- public class IsDefaultPosition : ISpecification
+ public class IsDefaultPosition : ISpecification<InputResult>
  {
   private readonly bool _isOnDefaultPos;
-  private readonly ISpecification _spec;
+  private readonly ISpecification<InputResult> _spec;
 
-  public IsDefaultPosition(bool isOnDefaultPos, ISpecification spec)
+  public IsDefaultPosition(bool isOnDefaultPos, ISpecification<InputResult> spec)
   {
    _isOnDefaultPos = isOnDefaultPos;
    _spec = spec;
@@ -16,7 +16,15 @@ namespace GameRefactor.GameInput.Specifications
   public bool IsMatching(InputResult inputResult)
   {
    return _spec.IsMatching(inputResult) &&
-          inputResult.Target.GetService<DefaultTilePosition>().IsOnDefaultPosition() == _isOnDefaultPos;
+          inputResult.Target.Get<DefaultTilePosition>().IsOnDefaultPosition() == _isOnDefaultPos;
+  }
+ }
+
+ public static class IsDefaultPositionFluentExtension
+ {
+  public static ISpecification<InputResult> IsDefaultPosition(this ISpecification<InputResult> specification, bool isOnDefaultPos)
+  {
+   return new IsDefaultPosition(isOnDefaultPos, specification);
   }
  }
 }

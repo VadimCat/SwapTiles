@@ -1,25 +1,20 @@
 using System;
-using Client.Models;
-using Client.Presenters;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using GameRefactor.Interfaces;
+using Ji2.Presenters;
+using Ji2Core.DataTypes;
+using Models.Solvables;
 using UnityEngine;
 
-namespace GameRefactor.Views
+namespace Views
 {
- public class TileRotationView : MonoBehaviour, ITileRotation
+ public class TileRotationView : ITileRotation
  {
-  public class Factory
-  {
-   public TileRotationView Create(GameObject gameObject, ITileRotation rotation)
-   {
-    var comp = gameObject.AddComponent<TileRotationView>();
-    comp.Construct(rotation);
-     return comp;
-   }
-  }
+  const float RotationTime = .2f;
   
-  private ITileRotation _tileRotation;
+  private readonly Transform _transform;
+  private readonly ITileRotation _tileRotation;
+  private readonly AnimationQueue _animationQueue;
   public bool IsCompleted => _tileRotation.IsCompleted;
 
   public event Action<bool> EventIsCompletedUpdated
@@ -36,10 +31,12 @@ namespace GameRefactor.Views
 
   public int Rotation => _tileRotation.Rotation;
 
-  private void Construct(ITileRotation tileRotation)
+  public TileRotationView(Transform transform, ITileRotation tileRotation, AnimationQueue animationQueue)
   {
+   _transform = transform;
    _tileRotation = tileRotation;
-   
+   _animationQueue = animationQueue;
+
    transform.localRotation = Quaternion.Euler(0, 0, tileRotation.Rotation);
 
    _tileRotation.EventRotationUpdated += OnTileRotationUpdate;
@@ -48,12 +45,27 @@ namespace GameRefactor.Views
   private void OnTileRotationUpdate(int rotation)
   {
    var newRotation = Quaternion.Euler(0, 0, rotation);
-   transform.DORotateQuaternion(newRotation, 1f);
+   _animationQueue.Animate(_transform.DORotateQuaternion(newRotation, RotationTime).ToUniTask()).Forget();
   }
 
   public void Rotate(RotationDirection direction)
   {
    _tileRotation.Rotate(direction);
+  }
+
+  public class Factory
+  {
+   private readonly AnimationQueue _animationQueue;
+
+   public Factory(AnimationQueue animationQueue)
+   {
+    this._animationQueue = animationQueue;
+   }
+
+   public ITileRotation Create(Transform tileRoot, ITileRotation tileRotation)
+   {
+    return new TileRotationView(tileRoot, tileRotation, _animationQueue);
+   }
   }
  }
 }

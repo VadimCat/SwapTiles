@@ -1,44 +1,47 @@
-﻿using Ji2.Context.Context;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Client.Views
 {
-    public class GridField: MonoBehaviour
+    public class GridField
     {
         public class Factory
         {
-            private readonly GridField _prototype;
+            private readonly Grid _prototype;
 
-            public GridField Create(Vector3Int size, Vector2 screenSize, float imageAspect)
+            public Factory(Grid gridPrototype)
             {
-                GameObject go = new();
-                Grid grid = go.AddComponent<Grid>();
-                GridField instance = go.AddComponent<GridField>();
-                instance.Construct(grid, size, screenSize, imageAspect);
-                return instance;
+                _prototype = gridPrototype;
+            }
+            
+            public GridField Create(int columns, int rows, Vector2 screenSize, float imageAspect)
+            {
+                Grid grid = Object.Instantiate(_prototype);
+                return new GridField(grid, columns, rows, screenSize, imageAspect);
             }
         }
         
-        private Grid _grid;
+        private readonly Grid _grid;
+        private readonly int _columns;
+        private readonly int _rows;
         private const float BorderL = 56;
         private const float BorderR = 56;
         private const float BorderT = 56;
         private const float BorderB = 109;
 
-        public Vector3Int Size { get; private set; }
         public Vector3 CellSize => _grid.cellSize;
 
-        private void Construct(Grid grid, Vector3Int size, Vector2 screenSize, float imageAspect)
+        private GridField(Grid grid, int columns, int rows, Vector2 screenSize, float imageAspect)
         {
             _grid = grid;
-            Size = size;
-            var availableScreenSize = screenSize - new Vector2(BorderL + BorderR, BorderB + BorderT);
+            _columns = columns;
+            _rows = rows;
+            Vector2 availableScreenSize = screenSize - new Vector2(BorderL + BorderR, BorderB + BorderT);
 
             float worldToPixels = screenSize.y / 4;
             float imageWidth = availableScreenSize.x / worldToPixels;
             float imageHeight = imageWidth / imageAspect;
-            _grid.cellSize = new Vector3(imageWidth / size.x, imageHeight / size.y, 1);
-            _grid.transform.position = -new Vector3(size.x * CellSize.x / 2, size.y * CellSize.y / 2, 0);
+            _grid.cellSize = new Vector3(imageWidth / _columns, imageHeight / _rows, 1);
+            _grid.transform.position = -new Vector3(_columns * CellSize.x / 2, _rows * CellSize.y / 2, 0);
         }
 
         public Vector3 GetPoint(Vector3Int position) => _grid.GetCellCenterWorld(position);
@@ -47,7 +50,7 @@ namespace Client.Views
         {
             cellIndex = _grid.WorldToCell(position);
             cellIndex.z = 0;
-            return cellIndex.x >= 0 && cellIndex.x <= Size.y && cellIndex.y >= 0 && cellIndex.x <= Size.y;
+            return cellIndex.x >= 0 && cellIndex.x <= _rows && cellIndex.y >= 0 && cellIndex.x <= _columns;
         }
     }
 }

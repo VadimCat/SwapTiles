@@ -1,7 +1,6 @@
 using System;
-using GameRefactor.GameInput;
 
-namespace GameRefactor.Models
+namespace Models.Interaction
 {
  public class Selectable: ISelectable
  {

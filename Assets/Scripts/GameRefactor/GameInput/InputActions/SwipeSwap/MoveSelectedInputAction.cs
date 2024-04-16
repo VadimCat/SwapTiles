@@ -1,10 +1,11 @@
-using GameRefactor.GameInput.Actions;
+using Input.Actions;
+using Input.Specifications;
 
-namespace GameRefactor.GameInput.InputActions
+namespace Input.InputActions.SwipeSwap
 {
  public class MoveSelectedInputAction : GameInputActionBase
  {
-  public MoveSelectedInputAction(ISpecification moveSelectedSpec, MoveTileAction moveTileAction) : base(moveSelectedSpec, moveTileAction)
+  public MoveSelectedInputAction(ISpecification<InputResult> moveSelectedSpec, MoveTileAction moveTileAction) : base(moveSelectedSpec, moveTileAction)
   {
   }
  }

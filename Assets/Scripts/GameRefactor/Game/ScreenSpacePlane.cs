@@ -1,7 +1,7 @@
 using Ji2;
 using UnityEngine;
 
-namespace GameRefactor.Game
+namespace Tiles
 {
  public class ScreenSpacePlane
  {

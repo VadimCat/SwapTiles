@@ -1,9 +1,9 @@
 using System;
-using Client.Models;
+using Ji2Core.DataTypes;
 
-namespace GameRefactor.Interfaces
+namespace Models.Solvables
 {
- public interface ITileRotation : ITileSolvable
+ public interface ITileRotation : ITileEngine
  {
   event Action<int> EventRotationUpdated;
   int Rotation { get; }

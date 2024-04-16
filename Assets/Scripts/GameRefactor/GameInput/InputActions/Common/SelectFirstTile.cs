@@ -1,10 +1,11 @@
-using GameRefactor.GameInput.Actions;
+using Input.Actions;
+using Input.Specifications;
 
-namespace GameRefactor.GameInput.InputActions
+namespace Input.InputActions.Common
 {
  public class SelectFirstTile : GameInputActionBase
  {
-  public SelectFirstTile(ISpecification spec, SelectTileAction selectTile) 
+  public SelectFirstTile(ISpecification<InputResult> spec, SelectTileAction selectTile) 
    : base(spec, selectTile)
   {
   }

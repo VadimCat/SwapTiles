@@ -1,7 +1,7 @@
 using Client.Views;
 using UnityEngine;
 
-namespace GameRefactor.Views
+namespace Views
 {
  public class TileImageView: MonoBehaviour
  {
@@ -9,16 +9,22 @@ namespace GameRefactor.Views
   {
    private readonly TileImageView _prototype;
    private readonly GridField _gridField;
+   private readonly Sprite _sprite;
+   private readonly int _rows;
+   private readonly int _columns;
 
-   public Factory(TileImageView prototype, GridField gridField)
+   public Factory(TileImageView prototype, GridField gridField, Sprite sprite, int columns, int rows)
    {
     _prototype = prototype;
     _gridField = gridField;
+    _sprite = sprite;
+    _rows = rows;
+    _columns = columns;
    }
-   public TileImageView Create(Sprite sprite, Vector3Int pos, int rows, int columns)
+   public TileImageView Create(Vector3Int pos)
    {
     var instance = Instantiate(_prototype);
-    instance.Construct(sprite, pos, rows, columns, _gridField.CellSize);
+    instance.Construct(_sprite, pos, _rows, _columns, _gridField.CellSize);
     return instance;
    }
   }
@@ -30,15 +36,15 @@ namespace GameRefactor.Views
   
   private MaterialPropertyBlock _materialPropertyBlock;
 
-  private void Construct(Sprite sprite, Vector3Int position, int rows, int columns, Vector3 cellSize)
+  private void Construct(Sprite sprite, Vector3Int position, int columns, int rows, Vector3 cellSize)
   {
    transform.localScale = new Vector3(cellSize.x, cellSize.y, 1);
    
    _materialPropertyBlock = new MaterialPropertyBlock();
    _materialPropertyBlock.SetTexture(BaseMap, sprite.texture);
    
-   float w = 1f/ rows;
-   float h = 1f/ columns;
+   float w = 1f/ columns;
+   float h = 1f/ rows;
    float x = w * position.x;
    float y = h * position.y;
    

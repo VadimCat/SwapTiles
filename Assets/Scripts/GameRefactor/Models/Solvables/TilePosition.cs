@@ -1,8 +1,7 @@
 using System;
-using GameRefactor.Interfaces;
 using UnityEngine;
 
-namespace GameRefactor.Models
+namespace Models.Solvables
 {
  public class TilePosition : ITilePosition
  {
@@ -34,10 +33,10 @@ namespace GameRefactor.Models
 
   public Vector3Int OriginalPos { get; }
 
-  public TilePosition(Vector3Int originalPos, Vector3Int startPos)
+  public TilePosition(Vector2Int originalPos, Vector2Int startPos)
   {
-   OriginalPos = originalPos;
-   Position = startPos;
+   OriginalPos = (Vector3Int)originalPos;
+   Position = (Vector3Int)startPos;
   }
 
   public void MoveTo(Vector3Int destination)

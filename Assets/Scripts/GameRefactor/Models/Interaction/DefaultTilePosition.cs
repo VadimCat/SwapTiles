@@ -1,8 +1,8 @@
 using Client.Views;
-using GameRefactor.Interfaces;
+using Models.Solvables;
 using UnityEngine;
 
-namespace GameRefactor.Models.Interaction
+namespace Models.Interaction
 {
  public class DefaultTilePosition
  {
@@ -23,6 +23,21 @@ namespace GameRefactor.Models.Interaction
    Vector3 positionCached = _transform.position;
    return Mathf.Approximately(defaultWorldPos.x, positionCached.x) &&
           Mathf.Approximately(defaultWorldPos.y, positionCached.y);
+  }
+
+  public class Factory
+  {
+   private readonly GridField _grid;
+
+   public Factory(GridField grid)
+   {
+    _grid = grid;
+   }
+
+   public DefaultTilePosition Create(ITilePosition tilePos, Transform tileRoot)
+   {
+    return new DefaultTilePosition(tilePos, tileRoot, _grid);
+   }
   }
  }
 }

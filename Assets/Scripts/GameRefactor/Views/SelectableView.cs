@@ -1,9 +1,9 @@
 using System;
 using DG.Tweening;
-using GameRefactor.GameInput;
+using Models.Interaction;
 using UnityEngine;
 
-namespace GameRefactor.Views
+namespace Views
 {
  public class SelectableView: MonoBehaviour, ISelectable
  {

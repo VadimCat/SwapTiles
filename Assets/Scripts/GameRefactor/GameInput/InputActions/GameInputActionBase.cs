@@ -1,11 +1,14 @@
-namespace GameRefactor.GameInput.InputActions
+using Input.Actions;
+using Input.Specifications;
+
+namespace Input.InputActions
 {
  public class GameInputActionBase
  {
-  private readonly ISpecification _spec;
+  private readonly ISpecification<InputResult> _spec;
   public readonly IAction Action;
 
-  protected GameInputActionBase(ISpecification spec, IAction action)
+  protected GameInputActionBase(ISpecification<InputResult> spec, IAction action)
   {
    _spec = spec;
    Action = action;

@@ -1,6 +1,6 @@
 using System;
 
-namespace GameRefactor.GameInput
+namespace Models.Interaction
 {
  public interface ISelectable
  {

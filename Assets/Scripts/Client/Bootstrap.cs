@@ -1,6 +1,3 @@
-using Client.Models;
-using Client.Presenters;
-using Client.States;
 using Ji2Core.Core.ScreenNavigation;
 using Ji2Core.Plugins.AppMetrica;
 using UI.Background;
@@ -8,6 +5,7 @@ using UnityEngine;
 using Client.Tutorial;
 using Client.Views;
 using Core.Compliments;
+using Cysharp.Threading.Tasks;
 using Ji2;
 using Ji2.Analytics;
 using Ji2.Audio;
@@ -50,24 +48,15 @@ namespace Client
 
             ISaveDataContainer dataContainer = new PlayerPrefsSaveDataContainer();
             _diContext.Register(dataContainer);
-            _diContext.Register(new LevelsLoopProgress(dataContainer, levelsConfig.GetLevelsOrder()));
 
 
             _diContext.Register(sceneLoader);
             _diContext.Register<ICompliments>(compliments);
             _diContext.Register(new Pool<CellView>(levelsConfig.ACellView, transform));
             
-            InstallFactories();
-            
             InstallStateMachine();
             InstallTutorial();
             StartApplication();
-        }
-
-        private void InstallFactories()
-        {
-            _diContext.Register(new LevelFactory(_diContext));
-            _diContext.Register(new LevelPresenterFactory(_diContext));
         }
 
         private void InstallTutorial()
@@ -75,14 +64,14 @@ namespace Client
             _diContext.Register(tutorialPointer);
             ITutorialFactory factory = new TutorialFactory(_diContext);
             ITutorialStep[] steps = { factory.Create<InitialTutorialStep>() };
-            var tutorialService = new TutorialService(_diContext.GetService<ISaveDataContainer>(), steps);
+            var tutorialService = new TutorialService(_diContext.Get<ISaveDataContainer>(), steps);
             _diContext.Register(tutorialService);
         }
 
         private void InstallStateMachine()
         {
-            StateMachine appStateMachine = new StateMachine(new GameStatesFactory(_diContext));
-            _diContext.Register(appStateMachine);
+            // StateMachine appStateMachine = new StateMachine(new GameStatesFactory(_diContext));
+            // _diContext.Register(appStateMachine);
         }
 
         private void InstallAnalytics()
@@ -94,10 +83,10 @@ namespace Client
 
         private void StartApplication()
         {
-            var appStateMachine = _diContext.GetService<StateMachine>();
+            var appStateMachine = _diContext.Get<StateMachine>();
             appStateMachine.Load();
             _appSession = new AppSession(appStateMachine);
-            _appSession.StateMachine.Enter<InitialState>();
+            // _appSession.StateMachine.Enter<InitialState>().Forget();
         }
 
         private void InstallCamera()

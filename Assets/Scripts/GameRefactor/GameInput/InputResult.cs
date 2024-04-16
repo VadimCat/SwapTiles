@@ -2,7 +2,7 @@ using Ji2.Context.Context;
 using UnityEngine;
 using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
-namespace GameRefactor.GameInput
+namespace Input
 {
  public struct InputResult
  {

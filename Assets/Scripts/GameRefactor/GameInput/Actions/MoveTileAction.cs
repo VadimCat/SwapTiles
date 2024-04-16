@@ -1,14 +1,17 @@
-using GameRefactor.Game;
+using Tiles;
+using Models.Interaction;
 
-namespace GameRefactor.GameInput.Actions
+namespace Input.Actions
 {
  public class MoveTileAction : IAction
  {
   private readonly ScreenSpacePlane _screenSpacePlane;
+  private readonly InputLocker _locker;
 
-  public MoveTileAction(ScreenSpacePlane screenSpacePlane)
+  public MoveTileAction(ScreenSpacePlane screenSpacePlane, InputLocker locker)
   {
    _screenSpacePlane = screenSpacePlane;
+   _locker = locker;
   }
 
   public void Act(InputResult inputResult)

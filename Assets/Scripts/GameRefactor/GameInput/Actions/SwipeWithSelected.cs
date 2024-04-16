@@ -1,10 +1,10 @@
 using System.Linq;
-using GameRefactor.Interfaces;
-using GameRefactor.Models.Interaction;
 using Ji2.Context.Context;
+using Models.Interaction;
+using Models.Solvables;
 using UnityEngine;
 
-namespace GameRefactor.GameInput.Actions
+namespace Input.Actions
 {
  public class SwipeWithSelected: IAction
  {
@@ -17,12 +17,12 @@ namespace GameRefactor.GameInput.Actions
   public void Act(InputResult inputResult)
   {
    Entity currentSelectedEntity = _currentSelection.AllSelected().First();
-   ISelectable selectedSelection = currentSelectedEntity.GetService<ISelectable>();
-   ITilePosition selectedPosition = currentSelectedEntity.GetService<ITilePosition>();
+   ISelectable selectedSelection = currentSelectedEntity.Get<ISelectable>();
+   ITilePosition selectedPosition = currentSelectedEntity.Get<ITilePosition>();
    Vector3Int selectedPositionIndex = selectedPosition.Position;
     
-   ISelectable inputSelection = inputResult.Target.GetService<ISelectable>();
-   ITilePosition inputPosition = inputResult.Target.GetService<ITilePosition>();
+   ISelectable inputSelection = inputResult.Target.Get<ISelectable>();
+   ITilePosition inputPosition = inputResult.Target.Get<ITilePosition>();
    Vector3Int inputPositionIndex = inputPosition.Position;
     
    inputSelection.Select();
