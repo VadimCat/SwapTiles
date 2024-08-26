@@ -1,9 +1,12 @@
 ﻿using Cysharp.Threading.Tasks;
 using Facebook.Unity;
+using Ji2.CommonCore.SaveDataContainer;
 using Ji2.Presenters.Tutorial;
 using Ji2.States;
 using Ji2.UI.Screens;
 using Ji2Core.Core.ScreenNavigation;
+using SwapTiles.Game.Level;
+using SwapTiles.Models.Progress;
 using UnityEngine;
 
 namespace SwapTiles.States
@@ -13,19 +16,27 @@ namespace SwapTiles.States
         private readonly StateMachine _stateMachine;
         private readonly ScreenNavigator _screenNavigator;
         private readonly TutorialService _tutorialService;
+        private readonly ISave _save;
+        private readonly LevelsConfig _levelsConfig;
+        private readonly LevelsRepository _levelsRepository;
 
-        public InitialState(StateMachine stateMachine, ScreenNavigator screenNavigator, TutorialService tutorialService)
+        public InitialState(StateMachine stateMachine, ScreenNavigator screenNavigator, TutorialService tutorialService,
+            ISave save, LevelsConfig levelsConfig)
         {
             _stateMachine = stateMachine;
             _screenNavigator = screenNavigator;
             _tutorialService = tutorialService;
+            _save = save;
+            _levelsConfig = levelsConfig;
         }
 
         public async UniTask Enter()
         {
             var facebookTask = LoadFb();
             var screen = await _screenNavigator.PushScreen<LoadingScreen>();
-            
+            _save.Load();
+            _levelsConfig.Bootstrap();
+            _levelsRepository.Load();
             _tutorialService.TryRunSteps();
             
             float fakeLoadingTime = 0;

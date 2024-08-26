@@ -1,6 +1,6 @@
-using Tiles;
+using SwapTiles.Game;
 
-namespace Client.States
+namespace SwapTiles.States
 {
- public record GameStatePayload(TilesLevelFactory TilesLevelFactory);
+ public record GameStatePayload(TilesGameFactory TilesGameFactory);
 }

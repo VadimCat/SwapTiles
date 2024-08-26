@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0030f55963bc4393a5b84ccfc812fdd5, type: 3}
+  m_Script: {fileID: 11500000, guid: 04723af8fba0bf944bf1a17f4c612858, type: 3}
   m_Name: LevelsConfig
   m_EditorClassIdentifier: 
   levels:
@@ -23,4 +23,3 @@ MonoBehaviour:
   - {fileID: 11400000, guid: da95653999b23684184ec2e0bf9f944d, type: 2}
   - {fileID: 11400000, guid: 0314f72b0e540924a9864fed1241020e, type: 2}
   - {fileID: 11400000, guid: 76edcd8ecdb90c042bdc2cf8c4e14150, type: 2}
-  levelACellView: {fileID: 6665031966729607952, guid: 9f862959e89c8a84981ab932b0a4f14f, type: 3}

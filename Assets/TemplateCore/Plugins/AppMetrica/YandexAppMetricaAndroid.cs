@@ -819,6 +819,6 @@ namespace Ji2Core.Plugins.AppMetrica
             }
         }
     }
+}
 
 #endif
-}

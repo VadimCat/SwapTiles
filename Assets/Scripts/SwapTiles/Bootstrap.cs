@@ -1,21 +1,21 @@
-using Client;
-using Client.Input;
-using Client.States;
-using Client.Views;
 using Cysharp.Threading.Tasks;
-using Input;
 using Ji2;
 using Ji2.CommonCore;
+using Ji2.CommonCore.SaveDataContainer;
 using Ji2.Context;
 using Ji2.Context.Context;
 using Ji2.Presenters;
 using Ji2.States;
 using Ji2Core.Core.ScreenNavigation;
+using Ji2Core.Saves;
+using SwapTiles.Game;
+using SwapTiles.Game.Level;
+using SwapTiles.GameInput;
+using SwapTiles.Input;
+using SwapTiles.Models.Progress;
 using SwapTiles.States;
-using Tiles;
-using Tiles.Input;
+using SwapTiles.Views;
 using UnityEngine;
-using Views;
 
 namespace SwapTiles
 {
@@ -25,14 +25,15 @@ namespace SwapTiles
   [SerializeField] private ScreenNavigator screenNavigator;
   [SerializeField] private TileImageView tileImagePrefab;
   [SerializeField] private UpdateService updateService;
-  [SerializeField] private Grid grid;
+  [SerializeField] private Grid gridPrototype;
+  [SerializeField] private LevelsConfig levels;
   
   DiContext _context = DiContext.GetOrCreateInstance();
 
   private void Awake()
   {
    _context = DiContext.GetOrCreateInstance();
-   _context.Register(new GridField.Factory(grid));
+   _context.Register(new GridField.Factory(gridPrototype));
    _context.Register(new CameraProvider());
    _context.Register(updateService);
    _context.Register(new ScreenSpacePlane(_context.Get<CameraProvider>()));
@@ -43,14 +44,16 @@ namespace SwapTiles
    _context.Register(new TapInputAction(new TouchScreenInputActions(), updateService));
    _context.Register(new TileInput(_context.Get<TapInputAction>(), _context.Get<CameraProvider>()));
    _context.Register(new InputFactory(_context));
+   _context.Register<ISave>(new PlayerPrefsSave());
+   _context.Register(new LevelsRepository(levels, _context.Get<ISave>()));
    new StateMachine(new GameStatesFactory(_context)).Enter<InitialState>().Forget();
    
-   DiContext levelContext = new(_context);
-   TilesLevelFactory levelFactory = new(levelContext);
-   _context.Register(levelFactory);
+   /*DiContext levelContext = new(_context);
+   TilesGameFactory gameFactory = new(levelContext);
+   _context.Register(gameFactory);
 
-   var level = levelFactory.BuildLevel(testConfig);
-   ExclusiveTileInput input = _context.Get<InputFactory>().Input(testConfig);
+   TilesGame game = gameFactory.BuildLevel(testConfig);
+   ExclusiveTileInput input = _context.Get<InputFactory>().Input(testConfig);*/
   }
  }
 }

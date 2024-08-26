@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Client;
-using Client.Views;
 using Ji2.Configs.Levels;
+using SwapTiles.Game.Level;
 using UnityEditor;
 using UnityEngine;
 

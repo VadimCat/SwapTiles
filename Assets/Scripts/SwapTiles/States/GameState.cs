@@ -4,7 +4,7 @@ using Ji2Core.Core.ScreenNavigation;
 using SwapTiles.UI.Screens;
 using UI.Background;
 
-namespace Client.States
+namespace SwapTiles.States
 {
     public class GameState : IPayloadedState<GameStatePayload>
     {
