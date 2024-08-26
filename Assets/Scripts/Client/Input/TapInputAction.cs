@@ -1,6 +1,7 @@
 using System;
 using Ji2.CommonCore;
 using Ji2.Utils;
+using Ji2Core.DataTypes;
 using UnityEngine;
 using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 

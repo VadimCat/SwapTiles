@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 namespace Client
 {
     [CreateAssetMenu(fileName = "LevelViewConfig")]
-    public class LevelConfig : SerializedScriptableObject, ILevelViewData
+    public class LevelConfig : SerializedScriptableObject, ILevelViewData, IIdentifier
     {
         [FormerlySerializedAs("_id")] [SerializeField] private string id;
 
