@@ -32,7 +32,7 @@ namespace SwapTiles.Models.Progress
 
   private void TryUnlockFirst()
   {
-   if(_levels[0].Status == LevelStatus.Locked)
+   if(_levels[0].State == LevelState.Locked)
    {
     _levels[0].Unlock();
     _levels[0].Save();

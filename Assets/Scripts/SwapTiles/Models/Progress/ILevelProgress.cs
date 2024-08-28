@@ -5,8 +5,8 @@ namespace SwapTiles.Models.Progress
  public interface ILevelProgress
  {
   string Key { get; }
-  LevelStatus Progress { get; }
-  event Action<LevelStatus> EventProgressUpdated;
+  LevelState Progress { get; }
+  event Action<LevelState> EventProgressUpdated;
   void Load();
   void Complete();
   void Unlock();

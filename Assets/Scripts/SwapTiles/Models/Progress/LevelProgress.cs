@@ -7,7 +7,7 @@ namespace SwapTiles.Models.Progress
  {
   public string Key { get; }
 
-  public LevelStatus Progress
+  public LevelState Progress
   {
    get => _progress;
    private set
@@ -17,9 +17,9 @@ namespace SwapTiles.Models.Progress
    }
   }
 
-  public event Action<LevelStatus> EventProgressUpdated;
+  public event Action<LevelState> EventProgressUpdated;
   
-  private LevelStatus _progress;
+  private LevelState _progress;
   private readonly ISave _save;
   private readonly string _key;
   
@@ -32,18 +32,18 @@ namespace SwapTiles.Models.Progress
   
   public void Load()
   {
-   Progress = _save.GetValue(_key, LevelStatus.Locked);
+   Progress = _save.GetValue(_key, LevelState.Locked);
   }
   
   public void Complete()
   {
-   Progress = LevelStatus.Completed;
+   Progress = LevelState.Completed;
    _save.SaveValue(_key, Progress);
   }
 
   public void Unlock()
   {
-   Progress = LevelStatus.Unlocked;
+   Progress = LevelState.Unlocked;
    _save.SaveValue(_key, Progress);
   }
  }

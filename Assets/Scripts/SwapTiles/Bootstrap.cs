@@ -46,7 +46,9 @@ namespace SwapTiles
    _context.Register(new InputFactory(_context));
    _context.Register<ISave>(new PlayerPrefsSave());
    _context.Register(new LevelsRepository(levels, _context.Get<ISave>()));
-   new StateMachine(new GameStatesFactory(_context)).Enter<InitialState>().Forget();
+   var stateMachine = new StateMachine(new GameStatesFactory(_context));
+   stateMachine.Load(); 
+   stateMachine.Enter<InitialState>().Forget();
    
    /*DiContext levelContext = new(_context);
    TilesGameFactory gameFactory = new(levelContext);

@@ -6,7 +6,7 @@ namespace SwapTiles.Models.Progress
  public class Level
  {
   public readonly string ID;
-  public LevelStatus Status { get; private set; }
+  public LevelState State { get; private set; }
   
   private readonly ISave _save;
 
@@ -18,22 +18,22 @@ namespace SwapTiles.Models.Progress
 
   public void Unlock()
   {
-   Status = LevelStatus.Unlocked;
+   State = LevelState.Unlocked;
   }
   
   public void Complete()
   {
-   Status = LevelStatus.Completed;
+   State = LevelState.Completed;
   }
   
   public void Load()
   {
-   Status = _save.GetValue(ID, LevelStatus.Locked);
+   State = _save.GetValue(ID, LevelState.Locked);
   }
 
   public void Save()
   {
-   _save.SaveValue(ID, Status);
+   _save.SaveValue(ID, State);
   }
  }
 }

@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="Tile" style="flex-wrap: nowrap; width: 374px; height: 374px; background-color: rgb(0, 0, 0);">
+        <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Content" class="LevelTileContent" />
+    </ui:VisualElement>
+</ui:UXML>
