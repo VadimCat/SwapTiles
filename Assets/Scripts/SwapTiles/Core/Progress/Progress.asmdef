@@ -1,4 +1,4 @@
 {
 	"name": "Progress",
-	"references":[ "GUID:15a41d79aba30a34684b83704053ef67", "GUID:b40432cfc2d126b4aba397ccb07aa8f0" ]
+	"references":[ "GUID:15a41d79aba30a34684b83704053ef67", "GUID:b40432cfc2d126b4aba397ccb07aa8f0", "GUID:809c35ddb6e341cc9aed0ba93b78020a" ]
 }

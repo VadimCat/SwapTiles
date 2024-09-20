@@ -20,7 +20,8 @@
         "SolvableEngines",
         "Ji2.UI",
         "SwapTiles.UI",
-        "Progress"
+        "Progress",
+        "LevelEnginesComposite"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
