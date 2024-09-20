@@ -6,12 +6,12 @@ namespace SwapTiles.GameInput.Actions
  public class MoveTileAction : IAction
  {
   private readonly ScreenSpacePlane _screenSpacePlane;
-  private readonly InputLocker _locker;
+  private readonly InputLock _lock;
 
-  public MoveTileAction(ScreenSpacePlane screenSpacePlane, InputLocker locker)
+  public MoveTileAction(ScreenSpacePlane screenSpacePlane, InputLock @lock)
   {
    _screenSpacePlane = screenSpacePlane;
-   _locker = locker;
+   _lock = @lock;
   }
 
   public void Act(InputResult inputResult)

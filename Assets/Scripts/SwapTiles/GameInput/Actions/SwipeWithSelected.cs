@@ -16,7 +16,7 @@ namespace SwapTiles.GameInput.Actions
   }
   public void Act(InputResult inputResult)
   {
-   Entity currentSelectedEntity = _currentSelection.AllSelected().First();
+   var currentSelectedEntity = _currentSelection.AllSelected().First();
    ISelectable selectedSelection = currentSelectedEntity.Get<ISelectable>();
    ITilePosition selectedPosition = currentSelectedEntity.Get<ITilePosition>();
    Vector3Int selectedPositionIndex = selectedPosition.Position;

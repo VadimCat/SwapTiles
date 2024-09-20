@@ -5,7 +5,6 @@ using Ji2.CommonCore.SaveDataContainer;
 using Ji2.Context;
 using Ji2.Context.Context;
 using Ji2.Presenters;
-using Ji2.States;
 using Ji2Core.Core.ScreenNavigation;
 using Ji2Core.Saves;
 using SwapTiles.Game;
@@ -16,12 +15,12 @@ using SwapTiles.Models.Progress;
 using SwapTiles.States;
 using SwapTiles.Views;
 using UnityEngine;
+using StateMachine = Ji2.States.StateMachine;
 
 namespace SwapTiles
 {
  public class Bootstrap : MonoBehaviour
  {
-  [SerializeField] private LevelConfig testConfig;
   [SerializeField] private ScreenNavigator screenNavigator;
   [SerializeField] private TileImageView tileImagePrefab;
   [SerializeField] private UpdateService updateService;

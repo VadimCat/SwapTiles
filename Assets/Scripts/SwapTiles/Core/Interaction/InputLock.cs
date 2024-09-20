@@ -1,7 +1,7 @@
 
 namespace SwapTiles.Models.Interaction
 {
- public class InputLocker
+ public class InputLock
  {
   private ILockingSource _lockSource;
 

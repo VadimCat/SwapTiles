@@ -1,15 +1,13 @@
 {
-    "name": "SwapTiles.UI",
+    "name": "EngineViews",
     "rootNamespace": "",
     "references": [
-        "Ji2.ScreenNavigator",
-        "DOTween.Modules",
-        "UniTask.DOTween",
-        "UniTask",
-        "Unity.TextMeshPro",
-        "Ji2.Context",
-        "Ji2.Pools",
-        "Progress"
+        "GUID:4ab676ed6e16436f842b4a1354ce1855",
+        "GUID:15a41d79aba30a34684b83704053ef67",
+        "GUID:029c1c1b674aaae47a6841a0b89ad80e",
+        "GUID:89f0233c64aebf144bef5a3f929f3179",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:b06d02361c2948e79f1618971da37e61"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Ji2.CommonCore.SaveDataContainer;
 
 namespace SwapTiles.Models.Progress

@@ -4,28 +4,28 @@ namespace SwapTiles.GameInput.Specifications
 {
  public class IsBlockedBy : ISpecification<InputResult>
  {
-  private readonly InputLocker _inputLocker;
+  private readonly InputLock _inputLock;
   private readonly ILockingSource _lockingSource;
   private ISpecification<InputResult> _spec;
 
-  public IsBlockedBy(ISpecification<InputResult> spec, InputLocker inputLocker, ILockingSource lockingSource)
+  public IsBlockedBy(ISpecification<InputResult> spec, InputLock inputLock, ILockingSource lockingSource)
   {
    _spec = spec;
-   _inputLocker = inputLocker;
+   _inputLock = inputLock;
    _lockingSource = lockingSource;
   }
   public bool IsMatching(InputResult inputResult)
   {
-   return _spec.IsMatching(inputResult) && _inputLocker.IsBlockedBy(_lockingSource);
+   return _spec.IsMatching(inputResult) && _inputLock.IsBlockedBy(_lockingSource);
   }
  }
 
  public static class IsBlockedByFluentExtension
  {
-  public static ISpecification<InputResult> IsBlockedBy(this ISpecification<InputResult> spec, InputLocker inputLocker,
+  public static ISpecification<InputResult> IsBlockedBy(this ISpecification<InputResult> spec, InputLock inputLock,
    ILockingSource lockingSource)
   {
-   return new IsBlockedBy(spec, inputLocker, lockingSource);
+   return new IsBlockedBy(spec, inputLock, lockingSource);
   }
  }
 }

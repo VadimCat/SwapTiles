@@ -26,7 +26,7 @@ namespace SwapTiles.GameInput
   public InputFactory(IDependenciesProvider dependenciesProvider)
   {
    _diContext = new DiContext(dependenciesProvider);
-   _diContext.Register(new InputLocker());
+   _diContext.Register(new InputLock());
    _diContext.Register(new RotationLockSource());
   }
 
@@ -100,7 +100,7 @@ namespace SwapTiles.GameInput
     TAction result =
      new MoveTileAction(
       _diContext.Get<ScreenSpacePlane>(),
-      _diContext.Get<InputLocker>()) as TAction;
+      _diContext.Get<InputLock>()) as TAction;
     _diContext.Register(result);
     return result;
    }
@@ -108,7 +108,7 @@ namespace SwapTiles.GameInput
    if (typeof(TAction) == typeof(RotationSwipeUpdate))
    {
     TAction result = new RotationSwipeUpdate(_diContext.Get<CurrentSelection>())
-      .Lockable(_diContext.Get<InputLocker>(), _diContext.Get<RotationLockSource>())
+      .Lockable(_diContext.Get<InputLock>(), _diContext.Get<RotationLockSource>())
      as TAction;
 
     _diContext.Register(result);
@@ -117,7 +117,7 @@ namespace SwapTiles.GameInput
 
    if (typeof(TAction) == typeof(EndRotationSwipe))
    {
-    TAction result = new EndRotationSwipe(_diContext.Get<InputLocker>(),
+    TAction result = new EndRotationSwipe(_diContext.Get<InputLock>(),
      _diContext.Get<RotationLockSource>(), _diContext.Get<CurrentSelection>()) as TAction;
     _diContext.Register(result);
     return result;
@@ -154,7 +154,7 @@ namespace SwapTiles.GameInput
   {
    return new RotationSwipeUpdate(_diContext.Get<CurrentSelection>())
     .AnimationExclusive(_diContext.Get<AnimationQueue>())
-    .Lockable(_diContext.Get<InputLocker>(), _diContext.Get<RotationLockSource>());
+    .Lockable(_diContext.Get<InputLock>(), _diContext.Get<RotationLockSource>());
   }
 
   private SelectFirstTile SelectTileInputAction()
@@ -209,7 +209,7 @@ namespace SwapTiles.GameInput
      .TouchPhase(TouchPhase.Moved)
      .HasTarget(true)
      .IsSelected(true)
-     .CanInteract(_diContext.Get<InputLocker>(), null, true),
+     .CanInteract(_diContext.Get<InputLock>(), null, true),
     CreateAction<MoveTileAction>());
 
    _diContext.Register(result);
@@ -225,7 +225,7 @@ namespace SwapTiles.GameInput
      .HasTarget(true)
      .IsSelected(true)
      .IsAnySelected(_diContext.Get<CurrentSelection>(), true)
-     .CanInteract(_diContext.Get<InputLocker>(), null, true)
+     .CanInteract(_diContext.Get<InputLock>(), null, true)
      .IsDefaultPosition(false),
     CreateAction<TrySwapTilesByPos>());
    _diContext.Register(result);
@@ -239,7 +239,7 @@ namespace SwapTiles.GameInput
      .TouchPhase(TouchPhase.Ended)
      .HasTarget(true)
      .IsSelected(false)
-     .CanInteract(_diContext.Get<InputLocker>(), null, true)
+     .CanInteract(_diContext.Get<InputLock>(), null, true)
      .IsAnySelected(_diContext.Get<CurrentSelection>(), true),
     new SwipeWithSelected(_diContext.Get<CurrentSelection>()));
 
@@ -254,7 +254,7 @@ namespace SwapTiles.GameInput
     ISpecification<InputResult>.Specification
      .TouchPhase(TouchPhase.Ended)
      .IsAnySelected(_diContext.Get<CurrentSelection>(), true)
-     .IsBlockedBy(_diContext.Get<InputLocker>(), _diContext.Get<RotationLockSource>()),
+     .IsBlockedBy(_diContext.Get<InputLock>(), _diContext.Get<RotationLockSource>()),
     CreateAction<EndRotationSwipe>());
 
    _diContext.Register(result);

@@ -4,21 +4,21 @@ namespace SwapTiles.GameInput.Actions.Rotation
 {
  public class InputExclusiveAction: IAction
  {
-  private readonly InputLocker _inputLocker;
+  private readonly InputLock _inputLock;
   private readonly RotationLockSource _rotationLockSource;
   private readonly IAction _action;
 
-  public InputExclusiveAction(IAction action, InputLocker inputLocker,
+  public InputExclusiveAction(IAction action, InputLock inputLock,
    RotationLockSource rotationLockSource)
   {
    _action = action;
-   _inputLocker = inputLocker;
+   _inputLock = inputLock;
    _rotationLockSource = rotationLockSource;
   }
   
   public void Act(InputResult inputResult)
   {
-   if (_inputLocker.TryLock(_rotationLockSource))
+   if (_inputLock.TryLock(_rotationLockSource))
    {
     _action.Act(inputResult);
    }

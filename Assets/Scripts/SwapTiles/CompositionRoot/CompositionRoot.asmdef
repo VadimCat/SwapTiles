@@ -1,0 +1,27 @@
+{
+    "name": "CompositionRoot",
+    "rootNamespace": "",
+    "references": [
+        "GUID:3afd977e72712bb4db9fc15217e0a108",
+        "GUID:b1b8567507fd4a959cb763a4244e8d8b",
+        "GUID:6216dd614b753984b80ce8b43c54dd56",
+        "GUID:f9ba9c4f36101ef45a9c63f4abcacc1b",
+        "GUID:15a41d79aba30a34684b83704053ef67",
+        "GUID:b40432cfc2d126b4aba397ccb07aa8f0",
+        "GUID:46a95fc5c43900f43b0a9cb4c0c8b34d",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:735960923064406aaced988a7ab96352",
+        "GUID:543678ea69da4567a24821a625d4d97c",
+        "GUID:b06d02361c2948e79f1618971da37e61",
+        "GUID:eaae98c51e642d846b04688e0b198e84"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
